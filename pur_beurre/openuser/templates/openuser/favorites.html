@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Mes favoris{% endblock %}
+
+{% block content %}
+<h1>Mes favoris</h1>
+
+
+<div id="favorites">
+    {% for favorite in favorites %}
+        <div class="favorite">
+            <p>{{ favorite.product_name }}, (grade {{ favorite.grade }})</p>
+            <p>Marque : {{ favorite.brand }}</p>
+            <p>Magasin : {{ favorite.store }}</p>
+            <p>product_img_url : {{ favorite.product_img_url }}</p>
+            <p>nutrition_img_url : {{ favorite.nutrition_img_url }}</p>
+            <p><a href={{ favorite.url }} target="_blank">> Voir le produit sur OFF</a></p>
+
+        </div>
+        <!-- product_name = models.CharField(max_length=255)
+    grade = models.CharField(max_length=1)
+    url = models.CharField(max_length=255)
+    barcode = models.CharField(max_length=13)
+    brand = models.CharField(max_length=30)
+    store = models.CharField(max_length=30)
+    categories = models.ManyToManyField(Category, null=True)
+    product_img_url = models.CharField(max_length=255, null=True)
+    nutrition_img_url = models.CharField(max_length=255, null=True) -->
+    {% endfor %}
+</div>
+
+{% endblock %}

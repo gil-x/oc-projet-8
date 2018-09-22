@@ -13,9 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.generic import TemplateView
+
+from openfood import views as openfood_views
+from openuser import views as openuser_views
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', TemplateView.as_view(template_name='openfood/index.html'), name='search_product'),
+    url(r'^favoris/', openuser_views.favorites, name='favorites'),
+    url(r'^connexion/', include('django.contrib.auth.urls')),
+    url(r'^inscription/', openuser_views.registration, name='registration'),
+    url(r'^connexion/', openuser_views.log_in, name='log_in'),
+    url(r'^deconnexion/', openuser_views.log_out, name='log_out'),
 ]

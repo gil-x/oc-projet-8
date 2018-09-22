@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Je me connecte{% endblock %}
+
+{% block content %}
+<h1>Connexion</h1>
+
+{% if error %}
+<p><strong>Erreur queque part...</strong></p>
+{% endif %}
+
+{% if user.is_authenticated %}
+    <p>Bonjour {{ user.username }} !</p>
+
+{% else %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Connexion" />
+    </form>
+{% endif %}
+
+{% endblock %}
