@@ -23,9 +23,12 @@ from openuser import views as openuser_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='openfood/index.html'), name='search_product'),
-    url(r'^favoris/', openuser_views.favorites, name='favorites'),
     url(r'^connexion/', include('django.contrib.auth.urls')),
+
+    url(r'^$', TemplateView.as_view(template_name='openfood/index.html'), name='search_product'),
+    url(r'^sample/$', openfood_views.ramdom_product, name='ramdom_product'),
+    url(r'^favoris/', openuser_views.favorites, name='favorites'),
+    
     url(r'^inscription/', openuser_views.registration, name='registration'),
     url(r'^connexion/', openuser_views.log_in, name='log_in'),
     url(r'^deconnexion/', openuser_views.log_out, name='log_out'),
