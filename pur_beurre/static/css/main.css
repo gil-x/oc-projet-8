@@ -49,3 +49,7 @@ nav * {
     margin-bottom: 10px;
     background: rgba(225, 125, 0, 0.35)
 }
+
+#product-search {
+    width: 100%;
+}

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.views.generic import TemplateView
+# from django.views.generic import TemplateView
 
 from openfood import views as openfood_views
 from openuser import views as openuser_views
@@ -25,9 +25,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^connexion/', include('django.contrib.auth.urls')),
 
-    url(r'^$', TemplateView.as_view(template_name='openfood/index.html'), name='search_product'),
+    # url(r'^$', TemplateView.as_view(template_name='openfood/index.html'), name='search_product'),
+    url(r'^$', openfood_views.search_product, name='search_product'),
     url(r'^sample/$', openfood_views.ramdom_product, name='ramdom_product'),
     url(r'^favoris/', openuser_views.favorites, name='favorites'),
+    url(r'^api/get_products/', openfood_views.get_products, name='get_products'),
+
     
     url(r'^inscription/', openuser_views.registration, name='registration'),
     url(r'^connexion/', openuser_views.log_in, name='log_in'),

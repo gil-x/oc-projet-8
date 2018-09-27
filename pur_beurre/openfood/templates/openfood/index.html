@@ -5,5 +5,24 @@
 {% block content %}
 
 <h2>Trouvez un produit de subsitution pour ce que vous consommez tous les jours</h2>
-<p>[index pb_explorer]</p>
+<p>test : {{ x }}</p>
+<!-- class="ui-widget" -->
+<form class="ui-widget" action="{% url 'search_product' %}" method="post">
+    {% csrf_token %}
+    
+    {% comment %} {{ form.as_p }} {% endcomment %}
+    <input id="product-search" />
+    <input type="submit" value="Submit" />
+</form>
+<br>
+<p>(Your search was: "{{ search }}")</p>
+<br>
+<h2>First product matching:</h2>
+<p>{{ result }} (grade {{ result.grade|upper }})</p>
+<ul>
+    {% comment %}{% for product in result %}{% endcomment %}
+    {% comment %}<li>{{ product }} (grade {{ product|upper }})</li>{% endcomment %}
+    {% comment %}{% endfor %}{% endcomment %}
+</ul>
+<h2>Substitute:</h2>
 {% endblock %}

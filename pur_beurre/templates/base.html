@@ -4,7 +4,10 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}Pur Beurre - Manger mieux !{% endblock %}</title>
-    <link href="{% static '/css/pb_style.css' %}" rel="stylesheet">
+    <link href="{% static '/css/main.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/css/jquery-ui.min.css' %}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{% static '/css/jquery-ui.structure.min.css' %}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{% static '/css/jquery-ui.theme.min.css' %}" type="text/css" media="all" />
   </head>
   <body>
     <div id="page">
@@ -47,5 +50,8 @@
 
     </div>
   </body>
-<script  src="{% static '/js/pb_script.js' %}"></script>
+<script src="{% static '/js/jquery-3.3.1.min.js' %}" type="text/javascript"></script>
+<script src="{% static '/js/jquery-ui.min.js' %}" type="text/javascript"></script>
+<script  src="{% static '/js/main.js' %}"></script>
+
 </html>

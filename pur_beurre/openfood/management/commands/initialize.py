@@ -34,7 +34,7 @@ class Collector:
             'action': "process",
             'tagtype_0': "categories",
             'tag_contains_0': "contains",
-            'tag_0': "Cheese",
+            'tag_0': category,
             'nutrition_grades': grade,
             'json': 1,
             'page_size': 1000,
