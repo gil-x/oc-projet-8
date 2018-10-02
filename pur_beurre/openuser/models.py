@@ -9,5 +9,3 @@ class Profile(models.Model):
     def __str__(self):
         return "{}-profile (id={})".format(self.user.username, self.user.id)
 
-
-

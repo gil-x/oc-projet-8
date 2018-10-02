@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<p>{{ product.product_name }}</p>
+<p>Grade : {{ product.grade|upper }}</p>
+{% comment %} product_name = models.CharField(max_length=255)
+    grade = models.CharField(max_length=1)
+    url = models.CharField(max_length=255)
+    barcode = models.CharField(max_length=13)
+    brand = models.CharField(max_length=30)
+    store = models.CharField(max_length=30)
+    categories = models.ManyToManyField(Category, related_name='products', through='Position')
+    product_img_url = models.CharField(max_length=255, null=True) {% endcomment %}
+<br>
+<p>substitutes :</p>
+<br>
+<ul>
+    {% for substitute in substitutes %}
+    <li>{{ substitute.product_name }} ({{ substitute.grade|upper }})</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

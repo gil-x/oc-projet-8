@@ -25,9 +25,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^connexion/', include('django.contrib.auth.urls')),
 
+    url(r'^produits/', include('openfood.urls')),
+
     # url(r'^$', TemplateView.as_view(template_name='openfood/index.html'), name='search_product'),
     url(r'^$', openfood_views.search_product, name='search_product'),
-    url(r'^sample/$', openfood_views.ramdom_product, name='ramdom_product'),
+    # url(r'^sample/$', openfood_views.ramdom_product, name='ramdom_product'),
+    # url(r'^substitutes/$', openfood_views.product_substitutes name='product_substitutes'),
     url(r'^favoris/', openuser_views.favorites, name='favorites'),
     url(r'^api/get_products/', openfood_views.get_products, name='get_products'),
 

@@ -10,8 +10,8 @@
 <form class="ui-widget" action="{% url 'search_product' %}" method="post">
     {% csrf_token %}
     
-    {% comment %} {{ form.as_p }} {% endcomment %}
-    <input id="product-search" />
+     {{ form.as_p }} 
+    {% comment %}<input id="product-search" />{% endcomment %}
     <input type="submit" value="Submit" />
 </form>
 <br>

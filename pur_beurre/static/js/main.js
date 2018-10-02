@@ -3,7 +3,7 @@ console.log("Javascript OK")
 
 $(document).ready(function(){
 
-var location_input=$('input[id="product-search"]');
+var location_input=$('input[id="id_search"]');
 location_input.autocomplete({
     source: "/api/get_products/",
     minLength: 2,
