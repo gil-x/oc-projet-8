@@ -7,14 +7,18 @@
 
 
 <div id="favorites">
+    <p>{{ response }} {{ product.product_name }}</p>
+    <p>To be deleted : {{ to_delete }} {{ to_delete.barcode }}</p>
     {% for favorite in favorites %}
         <div class="favorite">
             <p>{{ favorite.product_name }}, (grade {{ favorite.grade }})</p>
             <p>Marque : {{ favorite.brand }}</p>
             <p>Magasin : {{ favorite.store }}</p>
-            <p>product_img_url : {{ favorite.product_img_url }}</p>
-            <p>nutrition_img_url : {{ favorite.nutrition_img_url }}</p>
+            <img src={{ favorite.product_img_url }} alt="" title="" />
+            <img src={{ favorite.nutrition_img_url }} alt="" title="" />
             <p><a href={{ favorite.url }} target="_blank">> Voir le produit sur OFF</a></p>
+            <br>
+            <p><a href="{% url 'remove_from_favorites' pk=favorite.pk %}">Delete {{ favorite.id }}</a></p>
 
         </div>
         <!-- product_name = models.CharField(max_length=255)

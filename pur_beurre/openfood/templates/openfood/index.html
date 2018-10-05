@@ -5,12 +5,11 @@
 {% block content %}
 
 <h2>Trouvez un produit de subsitution pour ce que vous consommez tous les jours</h2>
-<p>test : {{ x }}</p>
 <!-- class="ui-widget" -->
 <form class="ui-widget" action="{% url 'search_product' %}" method="post">
     {% csrf_token %}
     
-     {{ form.as_p }} 
+    {{ form.as_p }} 
     {% comment %}<input id="product-search" />{% endcomment %}
     <input type="submit" value="Submit" />
 </form>

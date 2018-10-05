@@ -48,7 +48,6 @@ class Collector:
                 for key in product_keys:
                     product_to_store[key] = product[key]
                 products_to_store.append(product_to_store)
-                # print("One product added. (Total= {})".format(len(products_to_store)))
             except KeyError:
                 # print("Key Error on {}.".format(key))
                 pass
@@ -58,7 +57,7 @@ class Collector:
                 break
 
         self.products.extend(products_to_store)
-        # return products_to_store
+
 
     def register(self):
         for product in self.products:
@@ -76,7 +75,6 @@ class Collector:
                 new_category = Category.objects.get_or_create(
                     category_name=category,
                 )
-                # print("new_category:", new_category)
                 new_position = Position()
                 new_position.product = new_product
                 new_position.category = new_category[0]
@@ -101,5 +99,4 @@ class Command(BaseCommand):
     """
     def handle(self, *args, **options):
         collector = Collector()
-        # collector.register()
         collector.populate()

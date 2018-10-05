@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Profile
+from openfood.models import Product
 from .forms import CreateUser, LoginForm
 
 
@@ -50,8 +51,38 @@ def log_out(request):
     logout(request)
     return HttpResponseRedirect(reverse_lazy('log_in'))
 
-
-def favorites(request):
+@login_required
+def user_favorites(request):
     favorites = request.user.profile.products.all()
-    user = request
-    return render(request, 'openuser/favorites.html', {'favorites': favorites, 'test': user})
+    return render(request, 'openuser/favorites.html', {'favorites': favorites})
+
+
+@login_required
+def add_to_favorites(request, pk):
+    context = {}
+    product_to_add = Product.objects.all().filter(pk=pk).first()
+    context['product'] = product_to_add
+    if product_to_add:
+        context['response'] = "Y a un produit."
+        request.user.profile.products.add(product_to_add)
+    else:
+        context['response'] = "Y a PAS d'produit !"
+    return render(request, 'openuser/favorites.html', context)
+
+
+@login_required
+def remove_from_favorites(request, pk):
+    context = {}
+    product_to_remove = request.user.profile.products.filter(pk=pk).first()
+    # product.remove()
+    request.user.profile.products.remove(product_to_remove)
+    context['to_delete'] = product_to_remove
+    
+    # Product.objects.all().filter(pk=pk).first()
+    # context['product'] = product_to_add
+    # if product_to_add:
+    #     context['response'] = "Y a un produit."
+    #     request.user.profile.products.add(product_to_add)
+    # else:
+    #     context['response'] = "Y a PAS d'produit !"
+    return render(request, 'openuser/favorites.html', context)

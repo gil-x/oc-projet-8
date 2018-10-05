@@ -18,7 +18,7 @@
 <br>
 <ul>
     {% for substitute in substitutes %}
-    <li>{{ substitute.product_name }} ({{ substitute.grade|upper }})</li>
+    <li>{{ substitute.product_name }} ({{ substitute.grade|upper }}) <a href="{% url 'add_to_favorites' pk=substitute.pk %}">Add to favs</a></li>
     {% endfor %}
 </ul>
 

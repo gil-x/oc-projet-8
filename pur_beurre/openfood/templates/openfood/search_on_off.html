@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Recherche sur OFF{% endblock %}
+
+{% block content %}
+
+<h2>Recherche sur OFF</h2>
+<p>user_search : {{ user_search }}</p>
+
+<ul>
+    {% for product in products %}
+    <li>{{ product }}</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

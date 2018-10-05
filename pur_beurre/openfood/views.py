@@ -4,6 +4,7 @@ from django.urls import reverse, reverse_lazy
 from .models import Product, Category, Position
 from .forms import SearchForm
 from django.db.models import Q
+import requests
 import json
 
 def get_products(request):
@@ -11,15 +12,15 @@ def get_products(request):
     This view provides a JSON set of products of all grades but A.
     Used by jQuery autocomplete to suggests registered products.
     """
-    if request.is_ajax() or request.method == 'GET':
+    if request.is_ajax():
         q = request.GET.get('term', '')
+        print("x" + q + "x")
         products = Product.objects.filter(
-            Q(product_name__icontains = q) &
-            Q(grade='e') | Q(grade='d') | Q(grade='c') | Q(grade='b')
-            )[:10]
+            Q(product_name__startswith = q) &
+            (Q(grade='e') | Q(grade='d') | Q(grade='c') | Q(grade='b'))
+            ).order_by('product_name')[:10]
         results = []
         
-        print("===\nHello product!\n===")
         for product in products:
             results.append(product.product_name)
         data = json.dumps(results)
@@ -33,44 +34,64 @@ def search_product(request):
     context = {}
     form = SearchForm(request.POST or None)
     context['form'] = form
-    context['x'] = "ok, je suis là !"
-    print("context=", context)
     
     if form.is_valid(): 
-        context['search'] = form.cleaned_data['search']
+        user_search = form.cleaned_data['search']
+        context['search'] = user_search
         matching_products = Product.objects.filter(product_name__icontains=context['search'])
 
         if matching_products:
-            context['x'] = "Oh, mais ça marche en plus !"
             context['result'] = matching_products[0]
-            # return render(request, 'openfood/index.html', context)
             return HttpResponseRedirect(reverse(product_substitutes, kwargs={'pk': matching_products[0].pk}))
-            return render(request, 'openfood/product.html', pk=matching_products[0].id)
-
-            pass
-            # search substitute
-            # return substitute_page(id prduct)
         else:
-            context['x'] = "Hum, y a un os..."
-            return render(request, 'openfood/index.html', context)
-            pass
-            # req1 : search the product on openfood
-            # req2 : search substutes on openfood
-            # OR 
-            # req1 : search the product on openfood
-            # get his best category
-            # req2: download subsitutes of this categories
-            # redo the operation with the new product id
-
+            # Let's see on OFF...
+            # user_search
+            return HttpResponseRedirect(reverse(search_on_off, kwargs={'search': user_search}))
+            # return render(request, 'openfood/index.html', context)
     else:
         return render(request, 'openfood/index.html', context)
+
+
+def search_on_off(request, search):
+    context = {}
+    context['user_search'] = search
+
+    url="https://fr.openfoodfacts.org/cgi/search.pl"
+
+    args = {
+            'action': "process",
+            # 'tagtype_0': "labels",
+            'search_terms': search,
+            # 'tag_contains_0': "contains",
+            # 'tag_0': search,
+            # 'sort_by': 'unique_scans_n',
+            'json': 1,
+            'page_size': 10,
+            }
+    response = requests.get(url, params=args)
+    # products = response.json()["products"]
+
+    # print("=====")
+    # print(products)
+    # print("=====")
+    products = []
+
+    for product in response.json()["products"]:
+        try:
+            products.append(product['product_name'])
+        except KeyError:
+            pass
+
+    context['products'] = products
+
+
+    return render(request, 'openfood/search_on_off.html', context)
+
 
     
 def product_substitutes(request, pk):
     context = {}
     context['product'] = Product.objects.get(pk=pk)
-    
-
     categories = context['product'].categories.all()
     positions = Position.objects.filter(product=context['product'])
 
@@ -80,7 +101,6 @@ def product_substitutes(request, pk):
             (category.category_name, category.position_set.get(
                 category=category, product=context['product']))
             )
-    # context['product_e_cats_and_rank'] = categories_and_rank
 
     for category, rank in categories_and_rank:
         substitutes = Category.objects.filter(
@@ -97,39 +117,5 @@ def product_substitutes(request, pk):
 
 
 def ramdom_product(request):
-    context = {}
-
     product_e = Product.objects.filter(grade='e').order_by('?').first()
-    context['product_e'] = product_e
-
-    categories = product_e.categories.all()
-    positions = Position.objects.filter(product=product_e)
-
-    for p in positions:
-        print(p.rank, p.category)
-
-    categories_and_rank = []
-    for category in categories:
-        categories_and_rank.append(
-            (category.category_name,
-            category.position_set.get(category=category, product=product_e),)
-            )
-    context['product_e_cats_and_rank'] = categories_and_rank
-
-    for category, rank in categories_and_rank:
-        # substitutes = Category.objects.filter(category_name=category).first().products.all().filter(grade="b").order_by('?')
-        substitutes = Category.objects.filter(
-            category_name=category).first().products.all().filter(
-            Q(grade="a") | Q(grade="b")).order_by('?')
-        if substitutes.count() != 0:
-            context['substitutes'] = substitutes
-            break
-
-    if substitutes.count() == 0:
-        context['substitutes'] = "rien" # TODO The template should returns Error...
-
-    return HttpResponseRedirect(reverse(product_substitutes, kwargs={'pk': 123}))
-    return render(request, 'openfood/sample.html', context)
-
-
-
+    return HttpResponseRedirect(reverse(product_substitutes, kwargs={'pk': product_e.id}))

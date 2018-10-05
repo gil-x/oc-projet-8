@@ -28,9 +28,11 @@
           <li><a href="{% url 'product_substitutes' pk=123 %}">Substitutes to 123</a></li>
           <li><a href="{% url 'ramdom_product' %}">Random sample</a></li>
           <li><a href="{% url 'search_product' %}">Chercher un substitut</a></li>
-          <li><a href="{% url 'favorites' %}">Mes favoris</a></li>
+          {% comment %} <li><a href="{% url 'favorites' %}">Mes favoris</a></li> {% endcomment %}
           <li><a href="{% url 'log_in' %}">Me connecter</a></li>
           <li><a href="{% url 'registration' %}">Créer un compte</a></li>
+          <li><a href="{% url 'user_favorites' %}">Mes favoris</a></li>
+          <li><a href="{% url 'add_to_favorites' pk=123 %}">Test ajout de favori</a></li>
         </ul>
       </nav>
       {% endblock %}
