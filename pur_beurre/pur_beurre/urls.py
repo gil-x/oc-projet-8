@@ -29,6 +29,6 @@ urlpatterns = [
     url(r'^connexion/', openuser_views.log_in, name='log_in'),
     url(r'^deconnexion/', openuser_views.log_out, name='log_out'),
     url(r'^admin/', admin.site.urls),
-    url(r'^favoris/', include('openuser.urls')),
+    url(r'^mon-espace/', include('openuser.urls')),
     # url(r'^favoris/', openuser_views.favorites, name='favorites'),
 ]

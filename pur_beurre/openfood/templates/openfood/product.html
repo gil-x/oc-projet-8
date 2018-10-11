@@ -5,21 +5,21 @@
 {% block content %}
 <p>{{ product.product_name }}</p>
 <p>Grade : {{ product.grade|upper }}</p>
-{% comment %} product_name = models.CharField(max_length=255)
-    grade = models.CharField(max_length=1)
-    url = models.CharField(max_length=255)
-    barcode = models.CharField(max_length=13)
-    brand = models.CharField(max_length=30)
-    store = models.CharField(max_length=30)
-    categories = models.ManyToManyField(Category, related_name='products', through='Position')
-    product_img_url = models.CharField(max_length=255, null=True) {% endcomment %}
+
 <br>
 <p>substitutes :</p>
 <br>
-<ul>
-    {% for substitute in substitutes %}
-    <li>{{ substitute.product_name }} ({{ substitute.grade|upper }}) <a href="{% url 'add_to_favorites' pk=substitute.pk %}">Add to favs</a></li>
-    {% endfor %}
-</ul>
+{% if substitutes %}
+    <ul>
+        {% for substitute in substitutes %}
+        <li>{{ substitute.product_name }} ({{ substitute.grade|upper }}) <a href="{% url 'add_to_favorites' pk=substitute.pk %}">Add to favs</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun produit trouvé</p>
+{% endif %}
+
+<p>Ce résultat{{ user_search }} est-il satisfaisant ? Sinon je peux chercher sur Open Food Facts...</p>
+<a href="">Rechercher sur OFF</a>
 
 {% endblock %}

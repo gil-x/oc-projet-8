@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
@@ -38,12 +38,18 @@ def log_in(request):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         user = authenticate(username=username, password=password)
+        # print("request.REQUEST:", request.REQUEST)
 
         if user:
             login(request, user)
-            return HttpResponseRedirect(reverse_lazy('search_product'))
+            return redirect(request.GET['next'])
+            # if request.GET['next']:
+            #     return HttpResponseRedirect(request.GET['next'])
+
+            # return HttpResponseRedirect(reverse_lazy('search_product'))
 
     return render(request, 'openuser/connexion.html', {'form': form})
+
 
 
 @login_required

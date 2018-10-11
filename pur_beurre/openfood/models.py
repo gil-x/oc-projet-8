@@ -1,5 +1,33 @@
 from django.db import models
+from django.db.models import Q
 
+class ProductManager(models.Manager):
+    def get_substitutes(self, pk):
+        context = {}
+        context['product'] = Product.objects.get(pk=pk)
+        product = Product.objects.get(pk=pk)
+        categories = product.categories.all()
+        positions = Position.objects.filter(product=context['product'])
+        categories_and_rank = []
+
+        for category in categories:
+            categories_and_rank.append(
+                (category.category_name, category.position_set.get(
+                    category=category, product=product))
+                )
+
+        for category, rank in categories_and_rank:
+            substitutes = Category.objects.filter(
+                category_name=category).first().products.all().filter(
+                Q(grade="a") | Q(grade="b")).order_by('?')
+            if substitutes.count() != 0:
+                context['substitutes'] = substitutes
+                break
+
+        if substitutes.count() == 0:
+            context['substitutes'] = None # TODO The template should returns Error...
+
+        return context
 
 class Category(models.Model):
     category_name = models.CharField(max_length=255)
@@ -20,6 +48,7 @@ class Product(models.Model):
     store = models.CharField(max_length=30)
     categories = models.ManyToManyField(Category, related_name='products', through='Position')
     product_img_url = models.CharField(max_length=255, null=True)
+    objects = ProductManager()
 
     def __str__(self):
         return self.product_name

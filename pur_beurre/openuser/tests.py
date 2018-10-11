@@ -3,6 +3,14 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib.auth import authenticate
+from django.core.urlresolvers import reverse
+
+
+# class IndexPageTestCase(TestCase):
+#     def test_index_page(self):
+#         response = self.client.get(reverse('user_favorites'))
+#         self.assertEqual(response.status_code, 200)
+
 
 class ProfileTests(TestCase):
     @classmethod
@@ -24,6 +32,9 @@ class ProfileTests(TestCase):
         self.une_variable = "Salut !"
 
     def test_user_creation(self):
+        """
+        Test new user creation.
+        """
         username = 'Smith'
         password = 'password'
         email = 'smith@me.org'
@@ -52,6 +63,9 @@ class ProfileTests(TestCase):
     #     self.assertQuerysetEqual(reponse.context['minis'], [repr(mini)])
 
     def test_hello_display(self):
+        """
+        Test if username is avaiblable in 
+        """
         # response = self.client.get(reverse('mini_url.views.liste'))
         user_doe = User.objects.get(username='Doe')
         self.assertEqual(user_doe.username, 'Doe')

@@ -42,80 +42,97 @@ def search_product(request):
 
         if matching_products:
             context['result'] = matching_products[0]
-            return HttpResponseRedirect(reverse(product_substitutes, kwargs={'pk': matching_products[0].pk}))
+            return HttpResponseRedirect(reverse(product_substitutes, kwargs={
+                'pk': matching_products[0].pk,
+                # 'user_search': user_search,
+                }))
         else:
-            # Let's see on OFF...
-            # user_search
+            user_search = user_search.replace(" ", "-")
             return HttpResponseRedirect(reverse(search_on_off, kwargs={'search': user_search}))
-            # return render(request, 'openfood/index.html', context)
     else:
         return render(request, 'openfood/index.html', context)
 
 
 def search_on_off(request, search):
     context = {}
-    context['user_search'] = search
+    context['user_search'] = search.replace("-", " ")
 
     url="https://fr.openfoodfacts.org/cgi/search.pl"
 
     args = {
             'action': "process",
-            # 'tagtype_0': "labels",
-            'search_terms': search,
-            # 'tag_contains_0': "contains",
-            # 'tag_0': search,
-            # 'sort_by': 'unique_scans_n',
+            'search_terms': context['user_search'],
+            # 'nutrition_grades': 'c',
+            # 'nutrition_grades': 'd',
+            # 'nutrition_grades': 'e',
             'json': 1,
             'page_size': 10,
             }
+    # args = {
+    #         'action': "process",
+    #         'tagtype_0': "categories",
+    #         'tag_contains_0': "contains",
+    #         'tag_0': category,
+    #         'nutrition_grades': grade,
+    #         'json': 1,
+    #         'page_size': 1000,
+    #         }
     response = requests.get(url, params=args)
-    # products = response.json()["products"]
-
-    # print("=====")
-    # print(products)
-    # print("=====")
     products = []
 
     for product in response.json()["products"]:
         try:
-            products.append(product['product_name'])
+            new_product = {}
+            new_product['product_name'] = product['product_name']
+            new_product['grade'] = product['nutrition_grades']
+            new_product['barcode'] = product['code']
+            new_product['categories'] = product['categories_hierarchy'][::-1]
+            products.append(new_product)
+            # products.append(product['product_name'])
         except KeyError:
             pass
 
     context['products'] = products
 
-
     return render(request, 'openfood/search_on_off.html', context)
+
+def get_substitutes_on_off(request, barcode):
+    # rechercher le produit 
+    pass
 
 
     
 def product_substitutes(request, pk):
-    context = {}
-    context['product'] = Product.objects.get(pk=pk)
-    categories = context['product'].categories.all()
-    positions = Position.objects.filter(product=context['product'])
+    # TODO FAIRE UNE FONCTION HORS DE LA VUE dans un 'manager' Cf https://docs.djangoproject.com/en/2.1/topics/db/managers/
+    context = Product.objects.get_substitutes(pk)
+    # context['product'] = Product.objects.get(pk=pk)
+    # categories = context['product'].categories.all()
+    # positions = Position.objects.filter(product=context['product'])
 
-    categories_and_rank = []
-    for category in categories:
-        categories_and_rank.append(
-            (category.category_name, category.position_set.get(
-                category=category, product=context['product']))
-            )
+    # categories_and_rank = []
+    # for category in categories:
+    #     categories_and_rank.append(
+    #         (category.category_name, category.position_set.get(
+    #             category=category, product=context['product']))
+    #         )
 
-    for category, rank in categories_and_rank:
-        substitutes = Category.objects.filter(
-            category_name=category).first().products.all().filter(
-            Q(grade="a") | Q(grade="b")).order_by('?')
-        if substitutes.count() != 0:
-            context['substitutes'] = substitutes
-            break
+    # for category, rank in categories_and_rank:
+    #     substitutes = Category.objects.filter(
+    #         category_name=category).first().products.all().filter(
+    #         Q(grade="a") | Q(grade="b")).order_by('?')
+    #     if substitutes.count() != 0:
+    #         context['substitutes'] = substitutes
+    #         break
 
-    if substitutes.count() == 0:
-        context['substitutes'] = ["rien"] # TODO The template should returns Error...
+    # if substitutes.count() == 0:
+    #     context['substitutes'] = None
+
 
     return render(request, 'openfood/product.html', context)
 
 
 def ramdom_product(request):
     product_e = Product.objects.filter(grade='e').order_by('?').first()
-    return HttpResponseRedirect(reverse(product_substitutes, kwargs={'pk': product_e.id}))
+    context = Product.objects.get_substitutes(product_e.pk)
+    return render(request, 'openfood/product.html', context)
+    # return HttpResponseRedirect(reverse(product_substitutes, kwargs={'pk': product_e.id}))
