@@ -48,13 +48,27 @@
       </div>
       {% endblock %}
       </div>
-
-      
-
     </div>
   </body>
 <script src="{% static '/js/jquery-3.3.1.min.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/jquery-ui.min.js' %}" type="text/javascript"></script>
 <script  src="{% static '/js/main.js' %}"></script>
-
+<script type="text/javascript">
+  $('.favorite-remove').click(function(){
+  var product_id;
+  product_id = $(this).attr("product_id");
+  console.log("product_id: " + product_id);
+  var favorite = $(this).closest('.favorite');
+  console.log(favorite);
+  $.ajax(
+  {
+      type:"GET",
+      url: "http://127.0.0.1:8000/mon-espace/remove-product/" + product_id + "/",
+      success: function() {
+        console.log("Deleted!");
+        favorite.remove();
+      }
+   })
+});
+</script>
 </html>

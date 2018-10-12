@@ -103,31 +103,7 @@ def get_substitutes_on_off(request, barcode):
 
     
 def product_substitutes(request, pk):
-    # TODO FAIRE UNE FONCTION HORS DE LA VUE dans un 'manager' Cf https://docs.djangoproject.com/en/2.1/topics/db/managers/
     context = Product.objects.get_substitutes(pk)
-    # context['product'] = Product.objects.get(pk=pk)
-    # categories = context['product'].categories.all()
-    # positions = Position.objects.filter(product=context['product'])
-
-    # categories_and_rank = []
-    # for category in categories:
-    #     categories_and_rank.append(
-    #         (category.category_name, category.position_set.get(
-    #             category=category, product=context['product']))
-    #         )
-
-    # for category, rank in categories_and_rank:
-    #     substitutes = Category.objects.filter(
-    #         category_name=category).first().products.all().filter(
-    #         Q(grade="a") | Q(grade="b")).order_by('?')
-    #     if substitutes.count() != 0:
-    #         context['substitutes'] = substitutes
-    #         break
-
-    # if substitutes.count() == 0:
-    #     context['substitutes'] = None
-
-
     return render(request, 'openfood/product.html', context)
 
 
@@ -135,4 +111,4 @@ def ramdom_product(request):
     product_e = Product.objects.filter(grade='e').order_by('?').first()
     context = Product.objects.get_substitutes(product_e.pk)
     return render(request, 'openfood/product.html', context)
-    # return HttpResponseRedirect(reverse(product_substitutes, kwargs={'pk': product_e.id}))
+

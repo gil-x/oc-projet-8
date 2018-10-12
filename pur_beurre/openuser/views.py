@@ -8,10 +8,8 @@ from .models import Profile
 from openfood.models import Product
 from .forms import CreateUser, LoginForm
 
-
 def registration(request):
     form = CreateUser(request.POST or None)
-
     if form.is_valid():
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
@@ -20,37 +18,23 @@ def registration(request):
         new_user.set_password(password)
         new_user.email = email
         new_user.save()
-
         new_profile = Profile()
         new_profile.user = new_user
         new_profile.save()
-
         if authenticate(username=new_user.username, password=password):
             login(request, new_user)
-
     return render(request, 'openuser/registration.html', {'form': form})
-
 
 def log_in(request):
     form = LoginForm(request.POST or None)
-
     if form.is_valid():
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         user = authenticate(username=username, password=password)
-        # print("request.REQUEST:", request.REQUEST)
-
         if user:
             login(request, user)
             return redirect(request.GET['next'])
-            # if request.GET['next']:
-            #     return HttpResponseRedirect(request.GET['next'])
-
-            # return HttpResponseRedirect(reverse_lazy('search_product'))
-
     return render(request, 'openuser/connexion.html', {'form': form})
-
-
 
 @login_required
 def log_out(request):
@@ -61,7 +45,6 @@ def log_out(request):
 def user_favorites(request):
     favorites = request.user.profile.products.all()
     return render(request, 'openuser/favorites.html', {'favorites': favorites})
-
 
 @login_required
 def add_to_favorites(request, pk):
@@ -75,20 +58,10 @@ def add_to_favorites(request, pk):
         context['response'] = "Y a PAS d'produit !"
     return render(request, 'openuser/favorites.html', context)
 
-
 @login_required
 def remove_from_favorites(request, pk):
     context = {}
     product_to_remove = request.user.profile.products.filter(pk=pk).first()
-    # product.remove()
     request.user.profile.products.remove(product_to_remove)
     context['to_delete'] = product_to_remove
-    
-    # Product.objects.all().filter(pk=pk).first()
-    # context['product'] = product_to_add
-    # if product_to_add:
-    #     context['response'] = "Y a un produit."
-    #     request.user.profile.products.add(product_to_add)
-    # else:
-    #     context['response'] = "Y a PAS d'produit !"
     return render(request, 'openuser/favorites.html', context)

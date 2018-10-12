@@ -19,18 +19,11 @@
             <p><a href={{ favorite.url }} target="_blank">> Voir le produit sur OFF</a></p>
             <br>
             <p><a href="{% url 'remove_from_favorites' pk=favorite.pk %}">Delete {{ favorite.id }}</a></p>
-
+            <p><button class="favorite-remove" product_id={{ favorite.id }}>Remove {{ favorite.id }} from favorite</button></p>
         </div>
-        <!-- product_name = models.CharField(max_length=255)
-    grade = models.CharField(max_length=1)
-    url = models.CharField(max_length=255)
-    barcode = models.CharField(max_length=13)
-    brand = models.CharField(max_length=30)
-    store = models.CharField(max_length=30)
-    categories = models.ManyToManyField(Category, null=True)
-    product_img_url = models.CharField(max_length=255, null=True)
-    nutrition_img_url = models.CharField(max_length=255, null=True) -->
     {% endfor %}
 </div>
+
+
 
 {% endblock %}
