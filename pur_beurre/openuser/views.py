@@ -33,7 +33,8 @@ def log_in(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            return redirect(request.GET['next'])
+            if request.method == 'GET' and 'next' in request.GET:
+                return redirect(request.GET['next'])
     return render(request, 'openuser/connexion.html', {'form': form})
 
 @login_required

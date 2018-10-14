@@ -1,11 +1,14 @@
 from django.db import models
 from django.db.models import Q
+from django.shortcuts import get_object_or_404 # TODO Can I use it in Model Manager ?
 
 class ProductManager(models.Manager):
     def get_substitutes(self, pk):
         context = {}
-        context['product'] = Product.objects.get(pk=pk)
-        product = Product.objects.get(pk=pk)
+        # context['product'] = Product.objects.get(pk=pk)
+        context['product'] = get_object_or_404(Product, pk=pk)
+        # product = Product.objects.get(pk=pk)
+        product = get_object_or_404(Product, pk=pk)
         categories = product.categories.all()
         positions = Position.objects.filter(product=context['product'])
         categories_and_rank = []

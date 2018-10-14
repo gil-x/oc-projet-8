@@ -10,16 +10,39 @@
 <p>substitutes :</p>
 <br>
 {% if substitutes %}
-    <ul>
+    <div id="substitutes">
         {% for substitute in substitutes %}
-        <li>{{ substitute.product_name }} ({{ substitute.grade|upper }}) <a href="{% url 'add_to_favorites' pk=substitute.pk %}">Add to favs</a></li>
+        <div class="substitute">
+            <p>{{ substitute.product_name }} ({{ substitute.grade|upper }})</p>
+            <p><button class="favorite-add" product_id={{ substitute.id }}>Add {{ substitute.id }} to favorites</button></p>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 {% else %}
     <p>Aucun produit trouvé</p>
 {% endif %}
 
-<p>Ce résultat{{ user_search }} est-il satisfaisant ? Sinon je peux chercher sur Open Food Facts...</p>
-<a href="">Rechercher sur OFF</a>
 
 {% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+  $('.favorite-add').click(function(){
+  var product_id;
+  button= $(this);
+  product_id = $(this).attr("product_id");
+  console.log("product_id: " + product_id);
+  $.ajax(
+  {
+      type:"GET",
+      url: "http://127.0.0.1:8000/mon-espace/add-product/" + product_id + "/",
+      success: function() {
+        console.log("Added!");
+        button.text("Ajouté aux favoris");
+        button.removeClass('favorite-add');
+        button.addClass('favorite-added');
+      }
+   })
+});
+</script>
+{% endblock extra_js %}

@@ -104,11 +104,12 @@ def get_substitutes_on_off(request, barcode):
     
 def product_substitutes(request, pk):
     context = Product.objects.get_substitutes(pk)
-    return render(request, 'openfood/product.html', context)
+    return render(request, 'openfood/product.html', context) # TODO Do not display products wich are already in user favorites ! (hard!)
 
 
 def ramdom_product(request):
     product_e = Product.objects.filter(grade='e').order_by('?').first()
+    print("product_e:", product_e, "(", product_e.pk, ")")
     context = Product.objects.get_substitutes(product_e.pk)
     return render(request, 'openfood/product.html', context)
 
