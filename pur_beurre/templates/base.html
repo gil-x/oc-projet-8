@@ -4,13 +4,30 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}Pur Beurre - Manger mieux !{% endblock %}</title>
-    <link href="{% static '/css/main.css' %}" rel="stylesheet">
+    
+    <!-- <link href="{% static '/css/main.css' %}" rel="stylesheet"> -->
     <link rel="stylesheet" href="{% static '/css/jquery-ui.min.css' %}" type="text/css" media="all" />
     <link rel="stylesheet" href="{% static '/css/jquery-ui.structure.min.css' %}" type="text/css" media="all" />
     <link rel="stylesheet" href="{% static '/css/jquery-ui.theme.min.css' %}" type="text/css" media="all" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="{% static 'vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/creative.css' %}" rel="stylesheet">
+    <!-- :Bootstrap -->
+
   </head>
-  <body>
-    <div id="page">
+  <body id="page-top">
+    <!-- <div class="x"> -->
       {% block login %}
         <div id="account">
           {% if user.is_authenticated %}
@@ -22,20 +39,151 @@
       {% endblock %}
 
       {% block menu %}
-      <nav>
-        <ul>
-          <li><a href="{% url 'admin:index' %}">Administration</a></li>
-          <li><a href="{% url 'product_substitutes' pk=123 %}">Substitutes to 123</a></li>
-          <li><a href="{% url 'ramdom_product' %}">Random sample</a></li>
-          <li><a href="{% url 'search_product' %}">Chercher un substitut</a></li>
-          {% comment %} <li><a href="{% url 'favorites' %}">Mes favoris</a></li> {% endcomment %}
-          <li><a href="{% url 'log_in' %}">Me connecter</a></li>
-          <li><a href="{% url 'registration' %}">Créer un compte</a></li>
-          <li><a href="{% url 'user_favorites' %}">Mes favoris</a></li>
-          <li><a href="{% url 'add_to_favorites' pk=123 %}">Test ajout de favori</a></li>
-        </ul>
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" class="nav-link js-scroll-trigger" href="{% url 'admin:index' %}">Administration</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" class="nav-link js-scroll-trigger" href="{% url 'product_substitutes' pk=123 %}">Substitutes to 123</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" class="nav-link js-scroll-trigger" href="{% url 'ramdom_product' %}">Random sample</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger"href="{% url 'search_product' %}">Chercher un substitut</a>
+              </li>
+              {% comment %} <li class="nav-item"><a class="nav-link js-scroll-trigger"href="{% url 'favorites' %}">Mes favoris</a></li> {% endcomment %}
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger"href="{% url 'log_in' %}">Me connecter</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger"href="{% url 'registration' %}">Créer un compte</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger"href="{% url 'user_favorites' %}">Mes favoris</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger"href="{% url 'add_to_favorites' pk=123 %}">Test ajout de favori</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
       {% endblock %}
+
+      <header class="masthead text-center text-white d-flex">
+        <div class="container my-auto">
+          <div class="row">
+            <div class="col-lg-10 mx-auto">
+              <h1 class="text-uppercase">
+                <strong>Pur Beurre</strong>
+              </h1>
+              <hr>
+            </div>
+            <div class="col-lg-8 mx-auto">
+              <p class="text-faded mb-5">
+                Du gras oui, mais de qualité !
+              </p>
+              <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
+              </div>
+          </div>
+        </div>
+      </header>
+
+
+      <section class="bg-primary" id="about">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading text-white">We've got what you need!</h2>
+                <hr class="light my-4">
+                <p class="text-faded mb-4">
+                  <h2>Colette & Rémi</h2>
+                  <p>Nous sommes une jeune startup fondée par Remy et Colette Tatou, deux restaurateurs de renom. Notre restaurant, situé à Montmartre (Paris), compte une cinquantaine de couverts et ne désemplit pas. Notre spécialité, la ratatouille, nous attire une clientèle internationale charmée par les délices de ce plat typique.</p>
+                  <p>Remy et Colette sont amoureux de la gastronomie française (on ne peut les blâmer !). Travaillant quotidiennement avec les meilleurs produits du terroir, ils affectionnent particulièrement la bonne chaire et aiment partager leur passion. Il est donc normal que Remy ait sauté au plafond quand Colette, un jour de déprime, sortit du placard un kilo de Nutella et l’attaqua à la petite cuillère. Pourquoi ne pas opter pour une pâte à tartiner aux noisettes, plus consistante et moins sucrée ? Pourquoi, oh pourquoi s’infliger une telle souffrance ? Rémy était sidéré. La réponse de Colette fut simple : elle n’avait pas trouvé de substitut assez convainquant. A vrai dire, elle n’avait même pas cherché.</p>
+                  <p>Tous deux se souvinrent alors que nombre de leurs clients leur avaient compté, entre deux verres, qu’il était difficile de trouver des substituts aux cochonneries que nous mangions dès le petit déjeuner. Pourquoi ne pas lancer une plateforme web en ce sens ? Voici votre mission !</p>
+                </p>
+                <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Get Started!</a>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+        <section id="services">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <h2 class="section-heading">At Your Service</h2>
+                <hr class="my-4">
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <!-- <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box mt-5 mx-auto">
+                  <i class="fas fa-4x fa-gem text-primary mb-3 sr-icon-1"></i>
+                  <h3 class="mb-3">Sturdy Templates</h3>
+                  <p class="text-muted mb-0">Our templates are updated regularly so they don't break.</p>
+                </div>
+              </div> -->
+              <div class="col-lg-6 col-md-6 text-center">
+                <div class="service-box mt-5 mx-auto">
+                  <!-- <i class="fas fa-4x fa-paper-plane text-primary mb-3 sr-icon-2"></i> -->
+                  <img src="{% static '/img/colette.jpg' %}" alt="" title="" />
+                  <h3 class="mb-3">Colette</h3>
+                  <!-- <p class="text-muted mb-0">You can use this theme as is, or you can make changes!</p> -->
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 text-center">
+                <div class="service-box mt-5 mx-auto">
+                  <!-- <i class="fas fa-4x fa-code text-primary mb-3 sr-icon-3"></i> -->
+                  <img src="{% static '/img/remy.jpg' %}" alt="" title="" />
+                  <h3 class="mb-3">Rémy</h3>
+                  <!-- <p class="text-muted mb-0">We update dependencies to keep things fresh.</p> -->
+                </div>
+              </div>
+              <!-- <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box mt-5 mx-auto">
+                  <i class="fas fa-4x fa-heart text-primary mb-3 sr-icon-4"></i>
+                  <h3 class="mb-3">Made with Love</h3>
+                  <p class="text-muted mb-0">You have to make your websites with love these days!</p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                  <h2 class="section-heading">Contactez-nous !</h2>
+                  <hr class="my-4">
+                  <p class="mb-5">Nous serons ravis de répondre à toutes vos questions sur le bien-manger.</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4 ml-auto text-center">
+                  <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
+                  <p>01 02 03 04 05</p>
+                </div>
+                <div class="col-lg-4 mr-auto text-center">
+                  <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
+                  <p>
+                    <a href="mailto:contact@purbeurre.fr">contact@purbeurre.fr</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
 
       <div id="content">
         <h1>Du gras oui, mais de qualité !</h1>
@@ -48,11 +196,25 @@
       </div>
       {% endblock %}
       </div>
-    </div>
+    <!-- </div> -->
   </body>
 <script src="{% static '/js/jquery-3.3.1.min.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/jquery-ui.min.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/main.js' %}"></script>
+
+<!-- Bootstrap core JavaScript -->
+<!-- <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script> -->
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'vendor/scrollreveal/scrollreveal.min.js' %}"></script>
+<script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{% static 'js/creative.min.js' %}"></script>
+
+
 {% block extra_js %}
 {% endblock extra_js %}
 </html>
