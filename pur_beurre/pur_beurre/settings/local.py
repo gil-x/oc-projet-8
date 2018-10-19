@@ -12,25 +12,24 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def get_env_variable(var_name):
+    """Get the environment variable or return exception."""
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = 'Set the {} environment variable'.format(var_name)
+    raise ImproperlyConfigured(error_msg)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '5ou3c3sfmsfqhxt0r!da0wlfq^*-&&pvg#c7eks8!(9l=zf(0r'
+SECRET_KEY = get_env_variable('PUR_BEURRE_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',

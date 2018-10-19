@@ -316,8 +316,140 @@ header.masthead p {
        EXTRA
     ===========
 */
+#logo {
+  width: 3vw;
+  margin-right: 15px;
+}
+#mainNav {
+  background: rgba(33, 12, 0, 0.5)
+}
+#home-search-block {
+  background: rgba(255,255,255,0.9);
+  padding: 2vw 0 3vw 0;
+  border-radius: 7px;
+  box-shadow: rgba(33, 37, 41, 0.75) 0 0 15px;
+}
+#home-search-block h1, #home-search-block h2, #home-search-block .text-faded.mb-5, #home-search-block label {
+  color: #333;
+}
+.ui-widget {
+  text-align: center;
+  padding: 15px;
+  width: 100%;
+}
+.ui-widget p, .ui-widget label {
+  display: inline-block;
+}
+.ui-widget p {
+  text-align: right;
+}
+#id_search {
+  min-width: 20vw;
+  border: 1px solid #ced4da;
+}
+#id_search:focus {
+  border: 1px solid #F05F40;
+}
+.ui-widget #id_search, .ui-widget #submit-button {
+  border-radius: 5px;
+  padding: 5px;
+}
+/* .ui-widget #submit-button {
+  color: #ced4da;
+  background: #212529;
+  border: none;
+  padding: 6px;
+  margin: 5px;
+  transform: translateY(-2px);
+  transition: all 0.25s;
+}
+.ui-widget #submit-button:hover {
+  color: #fde4ea;
+  background: #414549;
+}
+.ui-widget #submit-button:active {
+  color: #fde4ea;
+  background: #CC6533;
+} */
+
+#about {
+  color: #fff;
+}
+
+
 #account {
   position: fixed;
   z-index: 1100;
   top: 0;
+}
+footer {
+  color: #FFF;
+  background: #212529;
+  padding: 2em;
+}
+
+#login-box p {
+  color: #333;
+  /* display: inline-block; */
+}
+#login-box label {
+  /* width: 30%; */
+  text-align: right;
+}
+
+#services {
+  padding-bottom: 0;
+}
+
+#substitutes {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: 10%;
+}
+#product-to-substitute {
+  flex-basis: 100%;
+}
+.substitute {
+  flex-basis: 100%;
+  padding: 10px;
+  
+}
+.substitute div {
+  display: flex;
+  padding: 10px;
+  text-align: center;
+  border-radius: 3px;
+  background: rgba(255,250,215,0.9);
+  box-shadow: 2px 3px 5px rgba(33, 10, 0, 0.15);
+}
+.substitute div img {
+  max-width: 75%;
+  max-height: 100px;
+  margin: 15px;
+}
+
+
+#maybe-create-account {
+  position: fixed;
+  top: 0vw;
+  padding: 5vw 20vw;
+  width: 100%;
+}
+#maybe-create-account div {
+  border-radius: 3px;
+  background: rgba(255,250,215,0.9);
+  box-shadow: 2px 3px 5px rgba(33, 10, 0, 0.15);
+  text-align: center;
+  padding: 5vw;
+  position: relative;
+  /* position: fixed;
+  top: 5vw;
+  padding: 10vw;
+  width: 100%; */
+}
+#quit-cross {
+  position: relative;
+  top: 0;
+  right: 0;
 }
