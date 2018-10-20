@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.urls import reverse, reverse_lazy
 from .models import Product, Category, Position
 from .forms import SearchForm
@@ -34,6 +35,8 @@ def search_product(request):
     context = {}
     form = SearchForm(request.POST or None)
     context['form'] = form
+    if "word" in request.session:
+        context['word'] = request.session["word"]
     
     if form.is_valid(): 
         user_search = form.cleaned_data['search']
@@ -104,12 +107,20 @@ def get_substitutes_on_off(request, barcode):
     
 def product_substitutes(request, pk):
     context = Product.objects.get_substitutes(pk)
+    request.session["word"] = "product"
     return render(request, 'openfood/product.html', context) # TODO Do not display products wich are already in user favorites ! (hard!)
 
 
 def ramdom_product(request):
+    request.session["word"] = "random"
     product_e = Product.objects.filter(grade='e').order_by('?').first()
     print("product_e:", product_e, "(", product_e.pk, ")")
     context = Product.objects.get_substitutes(product_e.pk)
+
+    # paginator = Paginator(context, 4)
+    # page = request.GET.get('page')
+    # contacts = paginator.get_page(page)
+    # return render(request, 'list.html', {'contacts': contacts})
     return render(request, 'openfood/product.html', context)
+    # return render(request, 'openfood/product.html', {'contacts': contacts})
 

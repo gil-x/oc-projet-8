@@ -316,6 +316,10 @@ header.masthead p {
        EXTRA
     ===========
 */
+
+* {
+  color: #333;
+}
 #logo {
   width: 3vw;
   margin-right: 15px;
@@ -409,14 +413,17 @@ footer {
 }
 #product-to-substitute {
   flex-basis: 100%;
+  border-radius: 3px;
+  background: rgba(255,250,215,0.9);
+  box-shadow: 2px 3px 5px rgba(33, 10, 0, 0.15);
 }
 .substitute {
-  flex-basis: 100%;
+  flex-basis: 25%;
   padding: 10px;
   
 }
 .substitute div {
-  display: flex;
+  /* display: flex; */
   padding: 10px;
   text-align: center;
   border-radius: 3px;
@@ -435,6 +442,7 @@ footer {
   top: 0vw;
   padding: 5vw 20vw;
   width: 100%;
+  display: none;
 }
 #maybe-create-account div {
   border-radius: 3px;
@@ -452,4 +460,8 @@ footer {
   position: relative;
   top: 0;
   right: 0;
+}
+.yes-i-want, .no-thanks {
+  widows: 100%;
+  margin: 10px;
 }

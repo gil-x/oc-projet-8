@@ -4,13 +4,14 @@
 
 {% block content %}
 
-
+<header class="masthead text-center text-white d-flex">
 <div id="substitutes">
     <div id="product-to-substitute">
-        <h1>Pour arrêter de consommer {{ product.product_name }}, de grade {{ product.grade|upper }}</h1>
+        <h1>On remplace !</h1>
+        <p>Pour arrêter de consommer {{ product.product_name }}, de grade {{ product.grade|upper }}, Pur Beurre et Open Food Facts vous proposent...</p>
         {% comment %} <p>{{ product.product_name }}</p>
         <p>Grade : {{ product.grade|upper }}</p> {% endcomment %}
-        <p>Pur Beurre et Open Food Facts vous proposent...</p>
+        {% comment %} <p>Pur Beurre et Open Food Facts vous proposent...</p> {% endcomment %}
     </div>
 {% if substitutes %}
     {% for substitute in substitutes %}
@@ -22,9 +23,9 @@
             <p><small>En vente à {{ substitute.store }}.</small></p>
             <p><a href="{{ substitute.url }}" target="_blank">» Voir sur OpenFoodFacts.org</a></p>
             {% if user.is_authenticated %}
-            <p><button class="favorite-add" product_id={{ substitute.id }}>Add {{ substitute.id }} to favorites</button></p>
+            <p><button class="favorite-add btn btn-primary" product_id={{ substitute.id }}>Ajouter aux favoris</button></p>
             {% else %}
-            <p><button class="favorite-add-disabled" product_id={{ substitute.id }}>Add {{ substitute.id }} to favorites</button></p>
+            <p><button class="favorite-add-disabled btn btn-secondary" product_id={{ substitute.id }}>Ajouter aux favoris</button></p>
             {% endif %}
         </div>
     </div>
@@ -33,16 +34,12 @@
     <p>Aucun produit trouvé</p>
 {% endif %}
 </div>
+</header>
 
 
 
 
 
-
-
-<br>
-<p>substitutes :</p>
-<br>
 
 
 <div id="maybe-create-account">
@@ -50,29 +47,10 @@
         <h2 class="text-uppercase"><strong>Pas encore de compte sur&nbsp;Pur&nbsp;Beurre ?</strong></h2>
         <p>Du coup, vous ne pouvez pas enregistrer vos aliments favoris... :-(</p>
         <p>Souhaitez-vous créer un compte maintenant ?</p>
-        <ul>
-            <li>{% comment %}{% url 'product_substitutes' pk={{product.id}} %} TODO {% endcomment %}
-                <a class="" href="{% url 'product_substitutes' pk=123 %}".replace("123")>Oui ! Je veux créer un compte !</a>
-
-            </li>
-            <li>
-                <a class="" href="#">Non merci, je continue à visiter comme ça.</a>
-            </li>
-        </ul>
-        <span id="quit-cross">x</span>
+        <button class="yes-i-want btn btn-success">Oui ! Je veux créer un compte !</button><br>
+        <button class="no-thanks btn btn-warning">Non merci, je continue à visiter comme ça.</button>
     </div>
 </div>
-
-
-<!-- product_name = models.CharField(max_length=255)
-    grade = models.CharField(max_length=1)
-    url = models.CharField(max_length=255)
-    barcode = models.CharField(max_length=13)
-    brand = models.CharField(max_length=30)
-    store = models.CharField(max_length=30)
-    categories = models.ManyToManyField(Category, related_name='products', through='Position')
-    product_img_url = models.CharField(max_length=255, null=True)
-    objects = ProductManager() -->
 
 
 </div>
@@ -100,10 +78,11 @@ $('.favorite-add').click(function(){
 });
 $('.favorite-add-disabled').click(function(){
     var product_id;
+    $('#maybe-create-account').slideToggle();
     button= $(this);
     product_id = $(this).attr("product_id");
     console.log("product_id: " + product_id);
-    $.ajax(
+    /*$.ajax(
     {
         type:"GET",
         url: "http://127.0.0.1:8000/mon-espace/add-product/" + product_id + "/",
@@ -113,7 +92,14 @@ $('.favorite-add-disabled').click(function(){
             button.removeClass('favorite-add');
             button.addClass('favorite-added');
         }
-    })
+    })*/
 });
+$('.yes-i-want').click(function(){
+    window.location.href = "{% url 'log_in' %}";
+});
+$('.no-thanks').click(function(){
+    $('#maybe-create-account').slideToggle();
+});
+
 </script>
 {% endblock extra_js %}

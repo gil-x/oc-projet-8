@@ -50,7 +50,7 @@
               <a class="nav-link js-scroll-trigger" class="nav-link js-scroll-trigger" href="{% url 'admin:index' %}">Administration</a>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger"href="{% url 'search_product' %}">Chercher un substitut</a>
+              <a class="nav-link js-scroll-trigger" href="{% url 'search_product' %}">Chercher un substitut</a>
             </li>
             {% comment %} <li class="nav-item"><a class="nav-link js-scroll-trigger"href="{% url 'favorites' %}">Mes favoris</a></li> {% endcomment %}
             <!-- <li class="nav-item">
@@ -60,8 +60,26 @@
               <a class="nav-link js-scroll-trigger"href="{% url 'user_favorites' %}">Mes favoris</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" class="nav-link js-scroll-trigger" href="{% url 'ramdom_product' %}">Au hasard !</a>
+              <a class="nav-link js-scroll-trigger" href="{% url 'ramdom_product' %}">Au hasard !</a>
             </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#">&nbsp;|</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#">{{ user.username }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'log_out' %}">se déconnecter</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="{% url 'registration' %}">Créer un compte</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="{% url 'log_in' %}">Me connecter</a>
+            </li>
+            {% endif %}
             <!-- <li class="nav-item">
               <a class="nav-link js-scroll-trigger"href="{% url 'add_to_favorites' pk=123 %}">Test ajout de favori</a>
             </li> -->

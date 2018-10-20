@@ -13,6 +13,13 @@
       </div>
       <div class="col-lg-12 mx-auto">
         <p class="text-faded mb-5">Du gras oui, mais de qualité !</p>
+        {% comment %} <ul>
+          {% for p in request.session %}
+          <li>p</li>
+          {% endfor %}
+        </ul> {% endcomment %}
+        <p>{{ word }}</p>
+
         <h2>Trouvez un produit de subsitution<br>
         pour ce que vous consommez tous les jours</h2>
         <form class="ui-widget" action="{% url 'search_product' %}" method="post">
