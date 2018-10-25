@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+<header class="masthead text-center text-white d-flex">
+<div id="products-list">
+    <div id="products-list-head">
+        <h1>On remplace !</h1>
+        <p>Pour arrêter de consommer {{ product.product_name }}, de grade {{ product.grade|upper }}, Pur Beurre et Open Food Facts vous proposent...</p>
+        {% comment %} <p>{{ product.product_name }}</p>
+        <p>Grade : {{ product.grade|upper }}</p> {% endcomment %}
+        {% comment %} <p>Pur Beurre et Open Food Facts vous proposent...</p> {% endcomment %}
+    </div>
+{% if substitutes %}
+    {% for substitute in substitutes %}
+    <div class="product">
+        <div>
+            <p><strong>{{ substitute.product_name }} ({{ substitute.grade|upper }})</strong></p>
+            <img src="{{ substitute.product_img_url }}" alt="{{ substitute.product_name }}" title="{{ substitute.product_name }}" />
+            <p><strong>Marque : </strong>{{ substitute.brand }}</p>
+            <p><small>En vente à {{ substitute.store }}.</small></p>
+            <p><a href="{{ substitute.url }}" target="_blank">» Voir sur OpenFoodFacts.org</a></p>
+            {% if user.is_authenticated %}
+            <p><button class="favorite-add btn btn-primary" product_id={{ substitute.id }}>Ajouter aux favoris</button></p>
+            {% else %}
+            <p><button class="favorite-add-disabled btn btn-secondary" product_id={{ substitute.id }}>Ajouter aux favoris</button></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Aucun produit trouvé</p>
+{% endif %}
+</div>
+</header>
+
+
+
+
+
+
+
+<div id="maybe-create-account">
+    <div>
+        <h2 class="text-uppercase"><strong>Pas encore de compte sur&nbsp;Pur&nbsp;Beurre ?</strong></h2>
+        <p>Du coup, vous ne pouvez pas enregistrer vos aliments favoris... :-(</p>
+        <p>Souhaitez-vous créer un compte maintenant ?</p>
+        <button class="yes-i-want btn btn-success">Oui ! Je veux créer un compte !</button><br>
+        <button class="no-thanks btn btn-warning">Non merci, je continue à visiter comme ça.</button>
+    </div>
+</div>
+
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+$('.favorite-add').click(function(){
+    var product_id;
+    button= $(this);
+    product_id = $(this).attr("product_id");
+    console.log("product_id: " + product_id);
+    $.ajax(
+    {
+        type:"GET",
+        url: "http://127.0.0.1:8000/mon-espace/add-product/" + product_id + "/",
+        success: function() {
+            console.log("Added!");
+            button.text("Ajouté aux favoris");
+            button.removeClass('favorite-add');
+            button.addClass('favorite-added');
+        }
+    })
+});
+$('.favorite-add-disabled').click(function(){
+    var product_id;
+    $('#maybe-create-account').slideToggle();
+    button= $(this);
+    product_id = $(this).attr("product_id");
+    console.log("product_id: " + product_id);
+    /*$.ajax(
+    {
+        type:"GET",
+        url: "http://127.0.0.1:8000/mon-espace/add-product/" + product_id + "/",
+        success: function() {
+            console.log("Added!");
+            button.text("Ajouté aux favoris");
+            button.removeClass('favorite-add');
+            button.addClass('favorite-added');
+        }
+    })*/
+});
+$('.yes-i-want').click(function(){
+    window.location.href = "{% url 'log_in' %}";
+});
+$('.no-thanks').click(function(){
+    $('#maybe-create-account').slideToggle();
+});
+
+</script>
+{% endblock extra_js %}
