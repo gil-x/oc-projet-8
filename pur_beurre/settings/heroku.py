@@ -17,7 +17,7 @@ import django_heroku
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['purb.herokuapp.com']
+ALLOWED_HOSTS = ['tchappui-gil-p8.herokuapp.com']
 
 
 django_heroku.settings(locals())
