@@ -15,7 +15,7 @@ from .local import *
 import django_heroku
 
 
-DEBUG = False
+# DEBUG = False
 
 ALLOWED_HOSTS = ['tchappui-gil-p8.herokuapp.com']
 
