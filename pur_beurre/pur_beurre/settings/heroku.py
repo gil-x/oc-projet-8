@@ -20,7 +20,3 @@ ALLOWED_HOSTS = ['purb.herokuapp.com']
 
 
 django_heroku.settings(locals())
-
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
