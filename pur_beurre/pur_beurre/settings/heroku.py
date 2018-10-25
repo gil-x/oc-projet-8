@@ -13,15 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 from .local import *
 import django_heroku
-from whitenoise.storage import CompressedManifestStaticFilesStorage
 
-class ErrorSquashingStorage(CompressedManifestStaticFilesStorage):
-
-    def url(self, name, **kwargs):
-        try:
-            return super(ErrorSquashingStorage, self).url(name, **kwargs)
-        except ValueError:
-            return name
 
 DEBUG = False
 
