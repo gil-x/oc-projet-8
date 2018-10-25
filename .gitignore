@@ -5,3 +5,4 @@
 /pur_beurre/htmlcov
 /pur_beurre/.coverage
 log.txt
+db.sqlite3
