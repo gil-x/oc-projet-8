@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 
-from local import *
+from .local import *
 import django_heroku
 
 DEBUG = False
