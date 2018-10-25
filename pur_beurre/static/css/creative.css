@@ -320,6 +320,10 @@ header.masthead p {
 * {
   color: #333;
 }
+header.masthead {
+  min-height: 100vh;
+}
+
 #logo {
   width: 3vw;
   margin-right: 15px;
@@ -405,24 +409,25 @@ footer {
   padding-bottom: 0;
 }
 
-#substitutes {
+#products-list {
   display: flex;
   flex-wrap: wrap;
+  align-items: stretch;
   width: 80%;
   margin: 10%;
 }
-#product-to-substitute {
+#products-list-head {
   flex-basis: 100%;
   border-radius: 3px;
   background: rgba(255,250,215,0.9);
   box-shadow: 2px 3px 5px rgba(33, 10, 0, 0.15);
 }
-.substitute {
-  flex-basis: 25%;
+.substitute, .favorite, .product {
+  flex-basis: 20%;
   padding: 10px;
   
 }
-.substitute div {
+.product div {
   /* display: flex; */
   padding: 10px;
   text-align: center;
@@ -430,12 +435,15 @@ footer {
   background: rgba(255,250,215,0.9);
   box-shadow: 2px 3px 5px rgba(33, 10, 0, 0.15);
 }
-.substitute div img {
+
+.product div img {
   max-width: 75%;
   max-height: 100px;
   margin: 15px;
 }
-
+#products-list .grade {
+  max-width: 5vw;
+}
 
 #maybe-create-account {
   position: fixed;
@@ -465,3 +473,52 @@ footer {
   widows: 100%;
   margin: 10px;
 }
+
+/* Product detail */
+#product {
+  /* width: 80%;
+  margin-left: 10%; */
+  padding: 1vw;
+  position: relative;
+  border-radius: 3px;
+  background: rgba(255,250,215,0.9);
+  box-shadow: 2px 3px 5px rgba(33, 10, 0, 0.15);
+  display: flex;
+  flex-wrap: wrap;
+}
+#product h1 {
+  font-size: 2rem;
+  flex-basis: 100%;
+}
+#product div {
+  flex-basis: 50%;
+  padding: 1rem;
+}
+#product-image img {
+  border: 1px solid #AAA;
+}
+#product-description {
+  text-align: left;
+}
+#product-description .grade {
+  width: 50%;
+}
+.grade {
+  font-size: 2rem;
+  font-weight: bold;
+}
+/* .grade-a {
+  color: Chartreuse;
+}
+.grade-b {
+  color: Turquoise;
+}
+.grade-c {
+  color: Turquoise;
+}
+.grade-d {
+  color: DarkOrange;
+}
+.grade-e {
+  color: Red;
+} */

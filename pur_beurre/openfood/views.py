@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.urls import reverse, reverse_lazy
@@ -108,7 +108,7 @@ def get_substitutes_on_off(request, barcode):
 def product_substitutes(request, pk):
     context = Product.objects.get_substitutes(pk)
     request.session["word"] = "product"
-    return render(request, 'openfood/product.html', context) # TODO Do not display products wich are already in user favorites ! (hard!)
+    return render(request, 'openfood/product_substitutes.html', context) # TODO Do not display products wich are already in user favorites ! (hard!)
 
 
 def ramdom_product(request):
@@ -121,6 +121,17 @@ def ramdom_product(request):
     # page = request.GET.get('page')
     # contacts = paginator.get_page(page)
     # return render(request, 'list.html', {'contacts': contacts})
-    return render(request, 'openfood/product.html', context)
+    return render(request, 'openfood/product_substitutes.html', context)
     # return render(request, 'openfood/product.html', {'contacts': contacts})
+
+def product_detail(request, pk):
+    context = {}
+    context["product"] = get_object_or_404(Product, pk=pk)
+
+    if request.user.is_authenticated:
+         if context["product"] in request.user.profile.products.all():
+            context["fav"] = True
+    else:
+        context["auth"] = False
+    return render(request, 'openfood/product_detail.html', context)
 

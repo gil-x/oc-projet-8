@@ -5,8 +5,8 @@
 {% block content %}
 
 <header class="masthead text-center text-white d-flex">
-<div id="substitutes">
-    <div id="product-to-substitute">
+<div id="products-list">
+    <div id="products-list-head">
         <h1>On remplace !</h1>
         <p>Pour arrêter de consommer {{ product.product_name }}, de grade {{ product.grade|upper }}, Pur Beurre et Open Food Facts vous proposent...</p>
         {% comment %} <p>{{ product.product_name }}</p>
@@ -15,7 +15,7 @@
     </div>
 {% if substitutes %}
     {% for substitute in substitutes %}
-    <div class="substitute">
+    <div class="product">
         <div>
             <p><strong>{{ substitute.product_name }} ({{ substitute.grade|upper }})</strong></p>
             <img src="{{ substitute.product_img_url }}" alt="{{ substitute.product_name }}" title="{{ substitute.product_name }}" />

@@ -1,28 +1,56 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %}Mes favoris{% endblock %}
 
 {% block content %}
-<h1>Mes favoris</h1>
 
-
-<div id="favorites">
-    <p>{{ response }} {{ product.product_name }}</p>
-    <p>To be deleted : {{ to_delete }} {{ to_delete.barcode }}</p>
+<header class="masthead text-center text-white d-flex">
+        {% comment %} <div id="product-to-substitute"> {% endcomment %}
+        
+    {% comment %} </div> {% endcomment %}
+<div id="products-list">
+    <div id="products-list-head">
+        <h1>Mes favoris</h1>
+    </div>
+{% if favorites %}
     {% for favorite in favorites %}
-        <div class="favorite">
-            <p>{{ favorite.product_name }}, (grade {{ favorite.grade }})</p>
-            <p>Marque : {{ favorite.brand }}</p>
-            <p>Magasin : {{ favorite.store }}</p>
+    <div class="product">
+        <div>
+            <p><strong>{{ favorite.product_name }}</strong></p>
+            {% comment %} <p>Marque : {{ favorite.brand }}</p> {% endcomment %}
+            {% comment %} <p>Magasin : {{ favorite.store }}</p> {% endcomment %}
             <img src={{ favorite.product_img_url }} alt="" title="" />
-            <img src={{ favorite.nutrition_img_url }} alt="" title="" />
-            <p><a href={{ favorite.url }} target="_blank">> Voir le produit sur OFF</a></p>
+            {% with '/img/grade_'|add:favorite.grade|add:'.png' as grade_image %}
+            <p><img class="grade" src="{% static grade_image %}" alt="{{ favorite.grade|upper }}" title="{{ favorite.grade|upper }}" /></p>
+            {% endwith %}
+            {% comment %} <p><a href={{ favorite.url }} target="_blank">> Voir le produit sur OFF</a></p> {% endcomment %}
+            {% comment %} {% with favorite.id as id %} {% endcomment %}
+            <p><a href={% url 'product_view' pk=favorite.id %} target="_blank">> Voir le produit sur OFF</a></p>
+            {% comment %} {% endwith %} {% endcomment %}
             <br>
-            <p><a href="{% url 'remove_from_favorites' pk=favorite.pk %}">Delete {{ favorite.id }}</a></p>
-            <p><button class="favorite-remove" product_id={{ favorite.id }}>Remove {{ favorite.id }} from favorite</button></p>
+            
+            <p><button class="favorite-remove btn btn-danger" product_id={{ favorite.id }}>Retirer des favoris</button></p>
         </div>
+    </div>
+    
     {% endfor %}
+{% else %}
+    <div>
+        <p>Vous n'avez pas encore de favoris</p>
+    </div>
+{% endif %}
+    
+    
 </div>
+</header>
+
+
+
+
+
+
+
 {% endblock %}
 
 {% block extra_js %}
@@ -31,7 +59,7 @@
   var product_id;
   product_id = $(this).attr("product_id");
   console.log("product_id: " + product_id);
-  var favorite = $(this).closest('.favorite');
+  var favorite = $(this).closest('.product');
   console.log(favorite);
   $.ajax(
   {
@@ -45,3 +73,47 @@
 });
 </script>
 {% endblock extra_js %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
