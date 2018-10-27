@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
+# SECRET_KEY = '5ou3c3sfmsfqhxt0r!da0wlfq^*-&&pvg#c7eks8!(9l=zf(0r'
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
