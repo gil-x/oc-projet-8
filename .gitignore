@@ -2,7 +2,10 @@
 /.vscode
 /_sandbox
 /pur_beurre/openfood/management/commands/__pycache__
+/openfood/management/commands/__pycache__/
 /pur_beurre/htmlcov
 /pur_beurre/.coverage
 /pur_beurre/db.sqlite3
+/settings/__pycache__/local.cpython-36.pyc
+db.sqlite3
 log.txt

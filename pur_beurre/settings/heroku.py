@@ -14,9 +14,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 from .local import *
 import django_heroku
 
-# DEBUG = False
+DEBUG = False
 
-ALLOWED_HOSTS = ['purb.herokuapp.com']
+
 
 
 django_heroku.settings(locals())
