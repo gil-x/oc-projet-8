@@ -124,6 +124,6 @@ USE_TZ = True
 LOGIN_URL = '/connexion/'
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#     STATIC_DIR,
-# ]
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
