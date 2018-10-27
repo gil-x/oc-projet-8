@@ -21,14 +21,24 @@ def get_env_variable(var_name):
         raise ImproperlyConfigured(error_msg)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-
-# SECRET_KEY = '5ou3c3sfmsfqhxt0r!da0wlfq^*-&&pvg#c7eks8!(9l=zf(0r'
-SECRET_KEY = get_env_variable('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('ENV') == 'PRODUCTION':
+    DEBUG = False
+    SECRET_KEY = get_env_variable('SECRET_KEY')
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    STATICFILES_DIRS = (
+        os.path.join(PROJECT_ROOT, 'static'),
+        )
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
+    
+else:
+    DEBUG = True
+    SECRET_KEY = '5ou3c3sfmsfqhxt0r!da0wlfq^*-&&pvg#c7eks8!(9l=zf(0r'
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+    STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 ALLOWED_HOSTS = ['127.0.0.1', 'purb.herokuapp.com']
 
@@ -51,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'pur_beurre.urls'
@@ -58,7 +69,7 @@ ROOT_URLCONF = 'pur_beurre.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,20 +84,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -103,10 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
-
 LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'Europe/Paris'
@@ -117,13 +116,15 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-LOGIN_URL = '/connexion/'
-
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#     STATIC_DIR,
-# ]
+
+if os.environ.get('ENV') == 'PRODUCTION':
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    STATICFILES_DIRS = (
+        os.path.join(PROJECT_ROOT, 'static'),
+    )
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
