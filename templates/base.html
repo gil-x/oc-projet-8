@@ -4,8 +4,7 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}Pur Beurre - Manger mieux !{% endblock %}</title>
-    
-    <!-- <link href="{% static '/css/main.css' %}" rel="stylesheet"> -->
+
     <link rel="stylesheet" href="{% static '/css/jquery-ui.min.css' %}" type="text/css" media="all" />
     <link rel="stylesheet" href="{% static '/css/jquery-ui.structure.min.css' %}" type="text/css" media="all" />
     <link rel="stylesheet" href="{% static '/css/jquery-ui.theme.min.css' %}" type="text/css" media="all" />
@@ -27,7 +26,7 @@
 
   </head>
   <body id="page-top">
-    {% block login %}
+    {% comment %} {% block login %}
     <div id="account">
       {% if user.is_authenticated %}
       <p>Bonjour {{ user.username }} ! (<a href="{% url 'log_out' %}">se déconnecter</a>)</p>
@@ -35,7 +34,7 @@
       <p><a href="{% url 'registration' %}">Créer un compte</a> | <a href="{% url 'log_in' %}">Se connecter</a></p>
       {% endif %}
     </div>
-    {% endblock %}
+    {% endblock %} {% endcomment %}
 
     {% block menu %}
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -110,7 +109,7 @@
     <footer>
       <div class="container">
         <div class="row">
-          <div class="col-lg-6 mr-auto text-center">Mentions légales</div>
+          <div class="col-lg-6 mr-auto text-center"><a href="{% url 'mentions' %}">Mentions légales</a></div>
           <div class="col-lg-6 mr-auto text-center">Contact</div>
         </div>
       </div>

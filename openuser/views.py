@@ -23,6 +23,7 @@ def registration(request):
         new_profile.save()
         if authenticate(username=new_user.username, password=password):
             login(request, new_user)
+            return HttpResponseRedirect(reverse_lazy('search_product'))
     return render(request, 'openuser/registration.html', {'form': form})
 
 def log_in(request):
@@ -35,6 +36,7 @@ def log_in(request):
             login(request, user)
             if request.method == 'GET' and 'next' in request.GET:
                 return redirect(request.GET['next'])
+            return HttpResponseRedirect(reverse_lazy('search_product'))
     return render(request, 'openuser/connexion.html', {'form': form})
 
 @login_required

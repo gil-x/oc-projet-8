@@ -30,5 +30,7 @@ urlpatterns = [
     url(r'^deconnexion/', openuser_views.log_out, name='log_out'),
     url(r'^admin/', admin.site.urls),
     url(r'^mon-espace/', include('openuser.urls')),
+    url(r'^mentions-légales/', openfood_views.mentions, name='mentions'),
+
     # url(r'^favoris/', openuser_views.favorites, name='favorites'),
 ]

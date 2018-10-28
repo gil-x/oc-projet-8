@@ -135,3 +135,5 @@ def product_detail(request, pk):
         context["auth"] = False
     return render(request, 'openfood/product_detail.html', context)
 
+def mentions(request):
+    return render(request, 'openfood/mentions.html')

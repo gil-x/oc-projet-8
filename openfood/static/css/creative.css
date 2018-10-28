@@ -507,6 +507,12 @@ footer {
   font-size: 2rem;
   font-weight: bold;
 }
+footer * {
+  color: #FFF;
+}
+#login-box label {
+  width: 25%;
+}
 /* .grade-a {
   color: Chartreuse;
 }
