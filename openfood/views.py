@@ -35,8 +35,11 @@ def search_product(request):
     context = {}
     form = SearchForm(request.POST or None)
     context['form'] = form
-    if "word" in request.session:
-        context['word'] = request.session["word"]
+    request.session["word"] = "search"
+    context["word"] = request.session["word"]
+    # if "word" in request.session:
+        # context['word'] = request.session["word"]
+        # context['word'] = "search"
     
     if form.is_valid(): 
         user_search = form.cleaned_data['search']
@@ -65,21 +68,9 @@ def search_on_off(request, search):
     args = {
             'action': "process",
             'search_terms': context['user_search'],
-            # 'nutrition_grades': 'c',
-            # 'nutrition_grades': 'd',
-            # 'nutrition_grades': 'e',
             'json': 1,
             'page_size': 10,
             }
-    # args = {
-    #         'action': "process",
-    #         'tagtype_0': "categories",
-    #         'tag_contains_0': "contains",
-    #         'tag_0': category,
-    #         'nutrition_grades': grade,
-    #         'json': 1,
-    #         'page_size': 1000,
-    #         }
     response = requests.get(url, params=args)
     products = []
 
@@ -91,7 +82,6 @@ def search_on_off(request, search):
             new_product['barcode'] = product['code']
             new_product['categories'] = product['categories_hierarchy'][::-1]
             products.append(new_product)
-            # products.append(product['product_name'])
         except KeyError:
             pass
 
@@ -107,22 +97,21 @@ def get_substitutes_on_off(request, barcode):
     
 def product_substitutes(request, pk):
     context = Product.objects.get_substitutes(pk)
-    request.session["word"] = "product"
+    request.session["word"] = pk
+    context["word"] = request.session["word"]
     return render(request, 'openfood/product_substitutes.html', context) # TODO Do not display products wich are already in user favorites ! (hard!)
 
 
 def ramdom_product(request):
-    request.session["word"] = "random"
+    context = {}
+    # request.session["word"] = "random"
     product_e = Product.objects.filter(grade='e').order_by('?').first()
-    print("product_e:", product_e, "(", product_e.pk, ")")
+    context["product"] = product_e
+    # print("product_e:", product_e, "(", product_e.pk, ")")
     context = Product.objects.get_substitutes(product_e.pk)
-
-    # paginator = Paginator(context, 4)
-    # page = request.GET.get('page')
-    # contacts = paginator.get_page(page)
-    # return render(request, 'list.html', {'contacts': contacts})
+    context["word"] = request.session["word"] = "random_{}".format(product_e.pk)
     return render(request, 'openfood/product_substitutes.html', context)
-    # return render(request, 'openfood/product.html', {'contacts': contacts})
+
 
 def product_detail(request, pk):
     context = {}
@@ -134,6 +123,7 @@ def product_detail(request, pk):
     else:
         context["auth"] = False
     return render(request, 'openfood/product_detail.html', context)
+
 
 def mentions(request):
     return render(request, 'openfood/mentions.html')

@@ -513,18 +513,17 @@ footer * {
 #login-box label {
   width: 25%;
 }
-/* .grade-a {
-  color: Chartreuse;
+.nav-link.js-scroll-trigger {
+  font-size: 0.8em !important;
 }
-.grade-b {
-  color: Turquoise;
+.navbar-toggler.navbar-toggler-right {
+  background: #FFF;
 }
-.grade-c {
-  color: Turquoise;
+#session-test {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  color: #000;
+  background: yellow;
+  padding: 20px;
 }
-.grade-d {
-  color: DarkOrange;
-}
-.grade-e {
-  color: Red;
-} */

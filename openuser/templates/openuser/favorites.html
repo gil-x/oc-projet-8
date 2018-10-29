@@ -26,7 +26,7 @@
             {% endwith %}
             {% comment %} <p><a href={{ favorite.url }} target="_blank">> Voir le produit sur OFF</a></p> {% endcomment %}
             {% comment %} {% with favorite.id as id %} {% endcomment %}
-            <p><a href={% url 'product_view' pk=favorite.id %} target="_blank">> Voir le produit sur OFF</a></p>
+            <p><a href={% url 'product_view' pk=favorite.id %} target="_blank">» Fiche produit</a></p>
             {% comment %} {% endwith %} {% endcomment %}
             <br>
             

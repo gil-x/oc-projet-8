@@ -21,7 +21,7 @@
             <img src="{{ substitute.product_img_url }}" alt="{{ substitute.product_name }}" title="{{ substitute.product_name }}" />
             <p><strong>Marque : </strong>{{ substitute.brand }}</p>
             <p><small>En vente à {{ substitute.store }}.</small></p>
-            <p><a href="{{ substitute.url }}" target="_blank">» Voir sur OpenFoodFacts.org</a></p>
+            <p><a href={% url 'product_view' pk=substitute.id %} target="_blank">» Fiche produit</a></p>
             {% if user.is_authenticated %}
             <p><button class="favorite-add btn btn-primary" product_id={{ substitute.id }}>Ajouter aux favoris</button></p>
             {% else %}

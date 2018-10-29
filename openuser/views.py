@@ -27,7 +27,12 @@ def registration(request):
     return render(request, 'openuser/registration.html', {'form': form})
 
 def log_in(request):
-    form = LoginForm(request.POST or None)
+    context = {}
+    if "word" in request.session:
+        context["word"] = request.session["word"]
+    else:
+        context["word"] = "logout"
+    context["form"] = form = LoginForm(request.POST or None)
     if form.is_valid():
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
@@ -37,12 +42,18 @@ def log_in(request):
             if request.method == 'GET' and 'next' in request.GET:
                 return redirect(request.GET['next'])
             return HttpResponseRedirect(reverse_lazy('search_product'))
-    return render(request, 'openuser/connexion.html', {'form': form})
+    return render(request, 'openuser/connexion.html', context)
+
+@login_required
+def user_account(request):
+    context = {}
+    context["favorites_number"] = len(request.user.profile.products.all())
+    return render(request, 'openuser/account.html', context)
 
 @login_required
 def log_out(request):
     logout(request)
-    return HttpResponseRedirect(reverse_lazy('log_in'))
+    return HttpResponseRedirect(reverse_lazy('search_product'))
 
 @login_required
 def user_favorites(request):
