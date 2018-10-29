@@ -20,6 +20,9 @@ from django.contrib import admin
 from openfood import views as openfood_views
 from openuser import views as openuser_views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     url(r'^$', openfood_views.search_product, name='search_product'),
@@ -33,4 +36,4 @@ urlpatterns = [
     url(r'^mentions-légales/', openfood_views.mentions, name='mentions'),
 
     # url(r'^favoris/', openuser_views.favorites, name='favorites'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
