@@ -152,7 +152,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
     print("STATIC_ROOT:", STATIC_ROOT)
     # Extra places for collectstatic to find static files.
     STATICFILES_DIRS = [
-        os.path.join(PROJECT_ROOT, "pur_beurre/static"),
+        os.path.join(BASE_DIR, "pur_beurre/static"),
     ]
     print("STATICFILES_DIRS:", STATICFILES_DIRS)
 
