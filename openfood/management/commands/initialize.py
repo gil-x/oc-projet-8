@@ -14,7 +14,7 @@ class Collector:
 
     def __init__(self, url="https://fr.openfoodfacts.org/cgi/search.pl",
             number_by_grade=[
-                ('a', 100), ('b', 100), ('c', 100), ('d', 100), ('e', 100)
+                ('a', 50), ('b', 50), ('c', 50), ('d', 50), ('e', 50)
                 ],
                 categories=["Salty snacks", "Cheeses", "Beverage", "Sauces", "Biscuits"]
             ):
@@ -23,7 +23,7 @@ class Collector:
         self.categories = categories
         self.products = []
 
-    def fetch(self, category="Cheese", grade="a", products_number=100,
+    def fetch(self, category="Cheese", grade="a", products_number=50,
             product_keys = [ 'product_name', 'nutrition_grades',
             'url', 'code', 'brands', 'stores', 'categories_hierarchy',
             'image_url', ]):

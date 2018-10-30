@@ -34,8 +34,8 @@ SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
-    # DEBUG = False
-    DEBUG = True
+    DEBUG = False
+    # DEBUG = True
     print("WE'RE in PRODUCTION environement")
 else:
     DEBUG = True
