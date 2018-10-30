@@ -41,6 +41,17 @@ def log_in(request):
             login(request, user)
             if request.method == 'GET' and 'next' in request.GET:
                 return redirect(request.GET['next'])
+            elif "random" in context["word"]:
+                """
+                If coming from random product page,
+                then redirect to the same product as standard substitute page.
+                """
+                return HttpResponseRedirect(
+                    reverse_lazy(
+                        'product_substitutes',
+                        kwargs={'pk': context["word"].replace("random_", "")}
+                        ),
+                    )
             return HttpResponseRedirect(reverse_lazy('search_product'))
     return render(request, 'openuser/connexion.html', context)
 

@@ -37,9 +37,6 @@ def search_product(request):
     context['form'] = form
     request.session["word"] = "search"
     context["word"] = request.session["word"]
-    # if "word" in request.session:
-        # context['word'] = request.session["word"]
-        # context['word'] = "search"
     
     if form.is_valid(): 
         user_search = form.cleaned_data['search']
@@ -50,7 +47,6 @@ def search_product(request):
             context['result'] = matching_products[0]
             return HttpResponseRedirect(reverse(product_substitutes, kwargs={
                 'pk': matching_products[0].pk,
-                # 'user_search': user_search,
                 }))
         else:
             user_search = user_search.replace(" ", "-")
