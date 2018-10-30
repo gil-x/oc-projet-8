@@ -2,6 +2,8 @@
 __pycache__/
 pur_beurre/__pycache__
 
+/log/error.log
+
 /venv
 /.vscode
 /_sandbox
