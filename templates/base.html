@@ -41,7 +41,7 @@
               <a class="nav-link js-scroll-trigger" href="{% url 'search_product' %}">Chercher un substitut</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger"href="{% url 'user_favorites' %}">Mes favoris</a>
+              <a class="nav-link js-scroll-trigger" href="{% url 'user_favorites' %}">Mes favoris</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="{% url 'ramdom_product' %}">Au hasard !</a>
@@ -85,7 +85,7 @@
       </div>
     </footer>
   </body>
-<script src="{% static '/js/jquery-3.3.1.min.js' %}" type="text/javascript"></script>
+{% comment %} <script src="{% static '/js/jquery-3.3.1.min.js' %}" type="text/javascript"></script> {% endcomment %}
 <script src="{% static '/js/jquery-ui.min.js' %}" type="text/javascript"></script>
 <script src="{% static '/js/main.js' %}"></script>
 
