@@ -410,6 +410,10 @@ footer {
   padding-bottom: 0;
 }
 
+#services, #contact {
+  background: #FFF;
+}
+
 #products-list {
   /* display: grid;
   grid-template-columns: 20%;
@@ -546,6 +550,9 @@ footer * {
 #product-header {
   background-image: url("../img/bg1.jpg");
 }
+#error-404 {
+  background-image: url("../img/product_404.jpg");
+  background-size: cover;}
 
 #refresh-link img {
   width: 2.5em;

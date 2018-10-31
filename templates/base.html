@@ -20,13 +20,13 @@
   <body id="page-top">
 
     {% block menu %}
-    <div id="session-test">
+    {% comment %} <div id="session-test">
         {% if currentsearch != None %}
         {{ currentsearch }}
         {% else %}
         no session
         {% endif %}
-      </div>
+    </div> {% endcomment %}
 
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
