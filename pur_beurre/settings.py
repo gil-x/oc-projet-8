@@ -173,7 +173,7 @@ else:
         # os.path.join(BASE_DIR, "openfood/static"),
 ]
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 
 # if DEBUG == False:
