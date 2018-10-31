@@ -64,7 +64,7 @@
   $.ajax(
   {
       type:"GET",
-      url: "http://127.0.0.1:8000/mon-espace/remove-product/" + product_id + "/",
+      url: base_url + "/mon-espace/remove-product/" + product_id + "/",
       success: function() {
         console.log("Deleted!");
         favorite.remove();

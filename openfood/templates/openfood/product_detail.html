@@ -71,12 +71,12 @@ $('.favorite-add').click(function(){
     $.ajax(
     {
         type:"GET",
-        url: "http://127.0.0.1:8000/mon-espace/add-product/" + product_id + "/",
+        url: base_url + "/mon-espace/add-product/" + product_id + "/",
         success: function() {
             console.log("Added!");
             button.text("Retirer des favoris");
             button.removeClass('favorite-add btn btn-primary');
-            button.addClass('favorite-added btn btn-danger');
+            button.addClass('favorite-remove btn btn-danger');
         }
     })
 });
@@ -89,17 +89,6 @@ $('.favorite-add-disabled').click(function(){
     button= $(this);
     product_id = $(this).attr("product_id");
     console.log("product_id: " + product_id);
-    /*$.ajax(
-    {
-        type:"GET",
-        url: "http://127.0.0.1:8000/mon-espace/add-product/" + product_id + "/",
-        success: function() {
-            console.log("Added!");
-            button.text("Ajouté aux favoris");
-            button.removeClass('favorite-add');
-            button.addClass('favorite-added');
-        }
-    })*/
 });
 
 
@@ -119,10 +108,11 @@ $('.favorite-remove').click(function(){
     console.log("product_id: " + product_id);
     var favorite = $(this).closest('.product');
     console.log(favorite);
+    console.log("push!");
     $.ajax(
     {
         type:"GET",
-        url: "http://127.0.0.1:8000/mon-espace/remove-product/" + product_id + "/",
+        url: base_url + "/mon-espace/remove-product/" + product_id + "/",
         success: function() {
             console.log("Deleted!");
             favorite.remove();
@@ -132,7 +122,6 @@ $('.favorite-remove').click(function(){
         }
      })
   });
-
 
 
 

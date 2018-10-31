@@ -1,11 +1,19 @@
-console.log("Javascript OK")
+console.log("Javascript OK");
+
+var base_url = "";
+if (window.location.href.substr(0, 22) == "http://127.0.0.1:8000/") {
+    base_url = "http://127.0.0.1:8000";
+}
+else {
+    base_url = "https://purb.herokuapp.com";
+}
 
 
 $(document).ready(function(){
 
 var location_input=$('input[id="id_search"]');
 location_input.autocomplete({
-    source: "/api/get_products/",
+    source: base_url + "/api/get_products/",
     minLength: 2,
     });
 

@@ -72,7 +72,7 @@ $('.favorite-add').click(function(){
     $.ajax(
     {
         type:"GET",
-        url: "http://127.0.0.1:8000/mon-espace/add-product/" + product_id + "/",
+        url: base_url + "/mon-espace/add-product/" + product_id + "/",
         success: function() {
             console.log("Added!");
             button.text("Ajouté aux favoris");
