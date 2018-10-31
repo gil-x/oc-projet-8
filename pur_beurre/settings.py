@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import dj_database_url
+# import dj_database_url
 
 def get_env_variable(var_name):
     """Get the environment variable or return exception."""
@@ -69,6 +69,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             TEMPLATE_DIR,
+            os.path.join(BASE_DIR,'templates'),
             os.path.join(BASE_DIR,'openfood/templates/openfood'),
             os.path.join(BASE_DIR,'openuser/templates/openuser'),
         ],
@@ -151,6 +152,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
     # Extra places for collectstatic to find static files.
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "pur_beurre/static"),
+        # os.path.join(BASE_DIR, "static"),
     ]
     print("STATICFILES_DIRS:", STATICFILES_DIRS)
 
