@@ -35,8 +35,8 @@ def search_product(request):
     context = {}
     form = SearchForm(request.POST or None)
     context['form'] = form
-    request.session["word"] = "search"
-    context["word"] = request.session["word"]
+    request.session["currentsearch"] = "search"
+    context["currentsearch"] = request.session["currentsearch"]
     
     if form.is_valid(): 
         user_search = form.cleaned_data['search']
@@ -93,19 +93,19 @@ def get_substitutes_on_off(request, barcode):
     
 def product_substitutes(request, pk):
     context = Product.objects.get_substitutes(pk)
-    request.session["word"] = pk
-    context["word"] = request.session["word"]
+    request.session["currentsearch"] = pk
+    context["currentsearch"] = request.session["currentsearch"]
     return render(request, 'openfood/product_substitutes.html', context) # TODO Do not display products wich are already in user favorites ! (hard!)
 
 
 def ramdom_product(request):
     context = {}
-    # request.session["word"] = "random"
+    # request.session["currentsearch"] = "random"
     product_e = Product.objects.filter(grade='e').order_by('?').first()
     context["product"] = product_e
     # print("product_e:", product_e, "(", product_e.pk, ")")
     context = Product.objects.get_substitutes(product_e.pk)
-    context["word"] = request.session["word"] = "random_{}".format(product_e.pk)
+    context["currentsearch"] = request.session["currentsearch"] = "random_{}".format(product_e.pk)
     return render(request, 'openfood/product_substitutes.html', context)
 
 

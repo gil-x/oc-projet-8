@@ -1,35 +1,39 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
-{% block title %}{% endblock %}
+{% block title %}Au hasard !{% endblock %}
 
 {% block content %}
 
-<header class="masthead text-center text-white d-flex">
+<header id="product-header" class="masthead text-center text-white d-flex">
 <div id="products-list">
     <div id="products-list-head">
         <h1>On remplace !</h1>
-        <p>Pour arrêter de consommer {{ product.product_name }}, de grade {{ product.grade|upper }}, Pur Beurre et Open Food Facts vous proposent...</p>
-        {% comment %} <p>{{ product.product_name }}</p>
-        <p>Grade : {{ product.grade|upper }}</p> {% endcomment %}
-        {% comment %} <p>Pur Beurre et Open Food Facts vous proposent...</p> {% endcomment %}
+        <p>Pour arrêter de consommer <strong>{{ product.product_name }}</strong>, de grade <strong>{{ product.grade|upper }}</strong>, Pur Beurre et Open Food Facts vous proposent...</p>
     </div>
 {% if substitutes %}
     {% for substitute in substitutes %}
     <div class="product">
         <div>
-            <p><strong>{{ substitute.product_name }} ({{ substitute.grade|upper }})</strong></p>
+            <p><strong class="product-name">{{ substitute.product_name }} ({{ substitute.grade|upper }})</strong></p>
             <img src="{{ substitute.product_img_url }}" alt="{{ substitute.product_name }}" title="{{ substitute.product_name }}" />
-            <p><strong>Marque : </strong>{{ substitute.brand }}</p>
-            <p><small>En vente à {{ substitute.store }}.</small></p>
             <p><a href={% url 'product_view' pk=substitute.id %} target="_blank">» Fiche produit</a></p>
             {% if user.is_authenticated %}
-            <p><button class="favorite-add btn btn-primary" product_id={{ substitute.id }}>Ajouter aux favoris</button></p>
+            <p><button class="favorite-add btn btn-warning" product_id={{ substitute.id }}>Ajouter aux favoris</button></p>
             {% else %}
             <p><button class="favorite-add-disabled btn btn-secondary" product_id={{ substitute.id }}>Ajouter aux favoris</button></p>
             {% endif %}
         </div>
     </div>
     {% endfor %}
+    <div class="product">
+        <a id="refresh-link" href="{{ request.get_full_path }}">
+            <div>
+                <strong>Charger<br>de nouveaux<br>produits !</strong><br>
+                <img src="{% static 'img/refresh.svg' %}" alt="Charger de nouveaux produits !" title="Charger de nouveaux produits !" />
+            </div>
+        </a>
+    </div>
 {% else %}
     <p>Aucun produit trouvé</p>
 {% endif %}
@@ -47,8 +51,9 @@
         <h2 class="text-uppercase"><strong>Pas encore de compte sur&nbsp;Pur&nbsp;Beurre ?</strong></h2>
         <p>Du coup, vous ne pouvez pas enregistrer vos aliments favoris... :-(</p>
         <p>Souhaitez-vous créer un compte maintenant ?</p>
-        <button class="yes-i-want btn btn-success">Oui ! Je veux créer un compte !</button><br>
-        <button class="no-thanks btn btn-warning">Non merci, je continue à visiter comme ça.</button>
+        <button class="yes-i-want btn btn-success">Oui ! Je veux créer un compte !</button>
+        <button class="already-user btn btn-info">j'ai déjà un compte, je me connecte</button><br><br>
+        <button class="no-thanks btn btn-secondary">Non merci, je continue à visiter comme ça</button>
     </div>
 </div>
 
@@ -72,7 +77,9 @@ $('.favorite-add').click(function(){
             console.log("Added!");
             button.text("Ajouté aux favoris");
             button.removeClass('favorite-add');
+            button.removeClass('btn-warning');
             button.addClass('favorite-added');
+            button.addClass('btn-success');
         }
     })
 });
@@ -95,6 +102,9 @@ $('.favorite-add-disabled').click(function(){
     })*/
 });
 $('.yes-i-want').click(function(){
+    window.location.href = "{% url 'registration' %}";
+});
+$('.already-user').click(function(){
     window.location.href = "{% url 'log_in' %}";
 });
 $('.no-thanks').click(function(){

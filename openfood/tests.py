@@ -1,23 +1,11 @@
 import requests
-
 from requests.models import Response
 from django.test import TestCase, Client
 from unittest.mock import Mock, patch, MagicMock
-# from django.core.urlresolvers import reverse
-
 from django.core.management import call_command
 from .management.commands.initialize import Collector
 from .models import Product, Category, Position
 
-# TODO
-# Liste des tests à faire :
-# - affichage des favoris s'il y en a
-# - affichage des favoris s'il n'y en a pas
-# - ajout d'un favori
-# - suppression d'un favori
-# - recherche d'un produit
-# - matching de produit
-# - 
 
 class CommandsTestCase(TestCase):
     def test_zeword(self):
