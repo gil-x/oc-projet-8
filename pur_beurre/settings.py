@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
+import django_heroku
 
 def get_env_variable(var_name):
     """Get the environment variable or return exception."""
@@ -39,6 +40,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
     print("WE'RE in PRODUCTION environement")
 else:
     DEBUG = True
+    # DEBUG = False
     print("DEBUG is TRUE")
 
 ALLOWED_HOSTS = ['127.0.0.1', 'purb.herokuapp.com']
@@ -145,6 +147,9 @@ STATIC_URL = '/static/'
 #     STATIC_DIR,
 # ]
 
+
+
+
 if os.environ.get('ENV') == 'PRODUCTION':
     # Static files settings
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -167,6 +172,23 @@ else:
         os.path.join(BASE_DIR, "pur_beurre/static"),
         # os.path.join(BASE_DIR, "openfood/static"),
 ]
+
+django_heroku.settings(locals())
+
+
+# if DEBUG == False:
+#     # Static files settings
+#     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+#     print("PROJECT_ROOT:", PROJECT_ROOT)
+#     STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+#     print("STATIC_ROOT:", STATIC_ROOT)
+#     STATICFILES_DIRS = [
+#         os.path.join(BASE_DIR, "pur_beurre/static"),
+#     ]
+#     print("STATICFILES_DIRS:", STATICFILES_DIRS)
+#     # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
 
 # LOGGING = {
 #     'version': 1,

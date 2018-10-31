@@ -9,11 +9,16 @@ from openfood.models import Product
 from .forms import CreateUser, LoginForm
 
 def registration(request):
-    form = CreateUser(request.POST or None)
-    if form.is_valid():
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        email = form.cleaned_data['email']
+    context = {}
+    if "currentsearch" in request.session:
+        context["currentsearch"] = request.session["currentsearch"]
+    else:
+        context["currentsearch"] = "logout"
+    context["form"] = CreateUser(request.POST or None)
+    if context["form"].is_valid():
+        username = context["form"].cleaned_data['username']
+        password = context["form"].cleaned_data['password']
+        email = context["form"].cleaned_data['email']
         new_user = User.objects.create_user(username)
         new_user.set_password(password)
         new_user.email = email
@@ -23,8 +28,20 @@ def registration(request):
         new_profile.save()
         if authenticate(username=new_user.username, password=password):
             login(request, new_user)
-            return HttpResponseRedirect(reverse_lazy('search_product'))
-    return render(request, 'openuser/registration.html', {'form': form})
+            if "random" in context["currentsearch"]:
+                """
+                If coming from random product page,
+                then redirect to the same product as standard substitute page.
+                """
+                return HttpResponseRedirect(
+                    reverse_lazy(
+                        'product_substitutes',
+                        kwargs={'pk': context["currentsearch"].replace("random_", "")}
+                        ),
+                    )
+            else:
+                return HttpResponseRedirect(reverse_lazy('search_product'))
+    return render(request, 'openuser/registration.html', context)
 
 def log_in(request):
     context = {}

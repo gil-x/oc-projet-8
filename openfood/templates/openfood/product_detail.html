@@ -17,7 +17,7 @@
             {% with '/img/grade_'|add:product.grade|add:'.png' as grade_image %}
             <p><img class="grade" src="{% static grade_image %}" alt="{{ product.grade|upper }}" title="{{ product.grade|upper }}" /></p>
             {% endwith %}
-            <p>{{ fav }}</p>
+            <!-- <p>{{ fav }}</p> -->
             <p><strong> Marque : </strong>{{ product.brand }}</p>
             <p><small>En vente à {{ product.store }}.</small></p>
             <p><a href="{{ product.url }}" target="_blank">» Voir sur OpenFoodFacts.org</a></p>
