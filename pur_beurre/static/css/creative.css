@@ -30,21 +30,20 @@ a:hover {
   color: #f05f40;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+* {
+  font-family: "Scope One", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, h1 *, h2 *, h3 *, .nav-link.js-scroll-trigger {
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .bg-primary {
-  background-color: #F05F40 !important;
+  /* background-color: #F05F40 !important; */
 }
 
 .bg-dark {
-  background-color: #212529 !important;
+  /* background-color: #212529 !important; */
 }
 
 .text-faded {
@@ -405,6 +404,9 @@ footer {
   /* width: 30%; */
   text-align: right;
 }
+#about {
+  background-color: #e8a75d !important;
+}
 
 #services {
   padding-bottom: 0;
@@ -521,6 +523,10 @@ footer {
   font-size: 2rem;
   font-weight: bold;
 }
+footer {
+  background: #345a61;
+}
+
 footer * {
   color: #FFF;
 }

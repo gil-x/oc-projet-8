@@ -1,23 +1,19 @@
 {% extends "base.html" %}
 {% load openfood_products_tags %}
 
-{% block title %}Recherche sur OFF{% endblock %}
+{% block title %}Rechercher sur Open Food Facts{% endblock %}
 
 {% block content %}
 
-<h2>Recherche sur OFF</h2>
-<p>user_search : {{ user_search }}</p>
-
-<ul>
-    {% for product in products %}
-    {% comment %} <li>{{ product['product_name'] }}({{ product['grade'] }})</li> {% endcomment %}
-    <li>
-        {{product|keyvalue:'product_name'}}({{product|keyvalue:'grade'}} - {{product|keyvalue:'barcode'}})<br>
-        {{product|keyvalue:'categories'}}
-    </li>
-    {% comment %} <li>{{ product|citation }}</li> {% endcomment %}
-    {% endfor %}
-</ul>
-
+<header id="product-header" class="masthead text-center text-white d-flex">
+    <div id="products-list">
+        <div id="products-list-head" style="padding: 50px;">
+            <h1>Rien ici...</h1>
+            <p>Désolé ! Ce site est en version beta et nous n'avons pas encore toutes les données d'Open Food Facts...</p>
+            <p>Nous n'avons rien à vous proposer pour remplacer <strong>{{ user_search }}</strong>, mais nous vous invitons à visiter par vous-même <a href="" target="_blank">https://fr.openfoodfacts.org/</a>.</p>
+            <p>À bientôt !</p>
+        </div>
+    </div>
+</header>
 
 {% endblock %}
