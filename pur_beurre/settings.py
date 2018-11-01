@@ -19,6 +19,7 @@ def get_env_variable(var_name):
         raise ImproperlyConfigured(error_msg)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'pur_beurre/static')
 
@@ -31,8 +32,8 @@ SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
-    # DEBUG = False
-    DEBUG = True
+    DEBUG = False
+    # DEBUG = True
     print("WE'RE in PRODUCTION environement")
 else:
     # DEBUG = False
@@ -146,13 +147,13 @@ STATIC_URL = '/static/'
 
 if os.environ.get('ENV') == 'PRODUCTION':
     # Static files settings
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-    print("PROJECT_ROOT:", PROJECT_ROOT)
+    
+    # print("PROJECT_ROOT:", PROJECT_ROOT)
     STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-    print("STATIC_ROOT:", STATIC_ROOT)
+    # print("STATIC_ROOT:", STATIC_ROOT)
     # Extra places for collectstatic to find static files.
     STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "pur_beurre/static"),
+        os.path.join(PROJECT_ROOT, 'static'),
         # os.path.join(BASE_DIR, "static"),
     ]
     print("STATICFILES_DIRS:", STATICFILES_DIRS)
@@ -164,6 +165,17 @@ if os.environ.get('ENV') == 'PRODUCTION':
     DATABASES['default'].update(db_from_env)
 else:
     STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "pur_beurre/static"),
+        os.path.join(PROJECT_ROOT, 'static'),
         # os.path.join(BASE_DIR, "openfood/static"),
 ]
+
+
+print("""
+DEBUG: {}
+BASE_DIR: {}
+PROJECT_ROOT: {}
+TEMPLATE_DIR: {}
+STATIC_ROOT: {}
+STATICFILES_DIRS: {}
+""".format(DEBUG, BASE_DIR, PROJECT_ROOT,
+TEMPLATE_DIR, STATIC_ROOT, STATICFILES_DIRS))
