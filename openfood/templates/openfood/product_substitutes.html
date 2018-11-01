@@ -7,15 +7,19 @@
 
 <header id="product-header" class="masthead text-center text-white d-flex">
 <div id="products-list">
-    <div id="products-list-head">
+    <div id="products-list-head"  class="grade-{{ product.grade }}">
         <h1>On remplace !</h1>
         <p>Pour arrêter de consommer <strong>{{ product.product_name }}</strong>, de grade <strong>{{ product.grade|upper }}</strong>, Pur Beurre et Open Food Facts vous proposent...</p>
+        <a id="refresh-link" href="{{ request.get_full_path }}">
+            <img src="{% static 'img/refresh.svg' %}" alt="Charger de nouveaux produits !" title="Charger de nouveaux produits !" /><strong>Charger de nouveaux produits !</strong>
+        </a>
     </div>
+    
 {% if substitutes %}
     {% for substitute in substitutes %}
     <div class="product">
-        <div>
-            <p><strong class="product-name">{{ substitute.product_name }} ({{ substitute.grade|upper }})</strong></p>
+        <div class="grade-{{ substitute.grade }}">
+            <p><strong class="product-name">{{ substitute.product_name }}</strong></p>
             <img src="{{ substitute.product_img_url }}" alt="{{ substitute.product_name }}" title="{{ substitute.product_name }}" />
             <p><a href={% url 'product_view' pk=substitute.id %} target="_blank">» Fiche produit</a></p>
             {% if user.is_authenticated %}
@@ -26,14 +30,14 @@
         </div>
     </div>
     {% endfor %}
-    <div class="product">
+    <!-- <div class="product">
         <a id="refresh-link" href="{{ request.get_full_path }}">
             <div>
                 <strong>Charger<br>de nouveaux<br>produits !</strong><br>
                 <img src="{% static 'img/refresh.svg' %}" alt="Charger de nouveaux produits !" title="Charger de nouveaux produits !" />
             </div>
         </a>
-    </div>
+    </div> -->
 {% else %}
     <p>Aucun produit trouvé</p>
 {% endif %}

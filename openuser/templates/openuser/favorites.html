@@ -9,25 +9,23 @@
         {% comment %} <div id="product-to-substitute"> {% endcomment %}
         
     {% comment %} </div> {% endcomment %}
-<div id="products-list">
+<div id="products-list" class="favorites-container">
     <div id="products-list-head">
         <h1>Mes favoris</h1>
     </div>
 {% if favorites %}
     {% for favorite in favorites %}
     <div class="product">
-        <div>
+        <div class="grade-{{ favorite.grade }}">
             <p><strong>{{ favorite.product_name }}</strong></p>
-            {% comment %} <p>Marque : {{ favorite.brand }}</p> {% endcomment %}
-            {% comment %} <p>Magasin : {{ favorite.store }}</p> {% endcomment %}
+            <img src={{ favorite.product_img_url }} alt="" title="" />
+            {% comment %} 
             <img src={{ favorite.product_img_url }} alt="" title="" />
             {% with '/img/grade_'|add:favorite.grade|add:'.png' as grade_image %}
             <p><img class="grade" src="{% static grade_image %}" alt="{{ favorite.grade|upper }}" title="{{ favorite.grade|upper }}" /></p>
             {% endwith %}
-            {% comment %} <p><a href={{ favorite.url }} target="_blank">> Voir le produit sur OFF</a></p> {% endcomment %}
-            {% comment %} {% with favorite.id as id %} {% endcomment %}
+ {% endcomment %}
             <p><a href={% url 'product_view' pk=favorite.id %} target="_blank">» Fiche produit</a></p>
-            {% comment %} {% endwith %} {% endcomment %}
             <br>
             
             <p><button class="favorite-remove btn btn-danger" product_id={{ favorite.id }}>Retirer des favoris</button></p>

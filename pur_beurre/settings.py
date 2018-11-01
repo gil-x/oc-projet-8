@@ -22,6 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'pur_beurre/static')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
 print('BASE_DIR:', BASE_DIR)
 print('TEMPLATE_DIR:', TEMPLATE_DIR)
@@ -32,8 +33,8 @@ SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
-    DEBUG = False
-    # DEBUG = True
+    # DEBUG = False
+    DEBUG = True
     print("WE'RE in PRODUCTION environement")
 else:
     # DEBUG = False
@@ -149,7 +150,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
     # Static files settings
     
     # print("PROJECT_ROOT:", PROJECT_ROOT)
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    
     # print("STATIC_ROOT:", STATIC_ROOT)
     # Extra places for collectstatic to find static files.
     STATICFILES_DIRS = [

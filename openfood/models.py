@@ -22,7 +22,7 @@ class ProductManager(models.Manager):
         for category, rank in categories_and_rank:
             substitutes = Category.objects.filter(
                 category_name=category).first().products.all().filter(
-                Q(grade="a") | Q(grade="b")).order_by('?')[:9]
+                Q(grade="a") | Q(grade="b")).order_by('?')[:6]
             if substitutes.count() != 0:
                 context['substitutes'] = substitutes
                 break
