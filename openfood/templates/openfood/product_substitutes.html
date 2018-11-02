@@ -21,7 +21,7 @@
         <div class="grade-{{ substitute.grade }}">
             <p><strong class="product-name">{{ substitute.product_name }}</strong></p>
             <img src="{{ substitute.product_img_url }}" alt="{{ substitute.product_name }}" title="{{ substitute.product_name }}" />
-            <p><a href={% url 'product_view' pk=substitute.id %} target="_blank">» Fiche produit</a></p>
+            <p><a href={% url 'product_view' pk=substitute.id %}>» Fiche produit</a></p>
             {% if user.is_authenticated %}
             <p><button class="favorite-add btn btn-warning" product_id={{ substitute.id }}>Ajouter aux favoris</button></p>
             {% else %}

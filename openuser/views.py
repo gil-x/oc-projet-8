@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Profile
 from openfood.models import Product
 from .forms import CreateUser, LoginForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def registration(request):
     context = {}
@@ -86,7 +87,18 @@ def log_out(request):
 @login_required
 def user_favorites(request):
     favorites = request.user.profile.products.all()
-    return render(request, 'openuser/favorites.html', {'favorites': favorites})
+    paginator = Paginator(favorites, 6)
+    page = request.GET.get('page')
+    try:
+        favorites_p = paginator.page(page)
+    except PageNotAnInteger:
+        favorites_p = paginator.page(1)
+    except EmptyPage:
+        favorites_p = paginator.page(paginator.num_pages)
+
+    return render(request, 'favorites_p.html', {'favorites_p': favorites_p})
+
+    # return render(request, 'openuser/favorites.html', {'favorites': favorites})
 
 @login_required
 def add_to_favorites(request, pk):

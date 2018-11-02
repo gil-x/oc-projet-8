@@ -37,8 +37,8 @@ if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = True
     print("WE'RE in PRODUCTION environement")
 else:
-    # DEBUG = False
-    DEBUG = True
+    DEBUG = False
+    # DEBUG = True
     print("DEBUG is TRUE")
 
 ALLOWED_HOSTS = ['127.0.0.1', 'purb.herokuapp.com']
