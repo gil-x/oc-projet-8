@@ -96,7 +96,7 @@ def user_favorites(request):
     except EmptyPage:
         favorites_p = paginator.page(paginator.num_pages)
 
-    return render(request, 'favorites_p.html', {'favorites_p': favorites_p})
+    return render(request, 'openuser/favorites_p.html', {'favorites_p': favorites_p})
 
     # return render(request, 'openuser/favorites.html', {'favorites': favorites})
 

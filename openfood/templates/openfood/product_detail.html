@@ -14,7 +14,7 @@
         </div>
         <div id="product-description">
             <p><strong>{{ product.product_name }} ({{ product.grade|upper }})</strong></p>
-            {% with '/img/grade_'|add:product.grade|add:'.png' as grade_image %}
+            {% with 'img/grade_'|add:product.grade|add:'.png' as grade_image %}
             <p><img class="grade" src="{% static grade_image %}" alt="{{ product.grade|upper }}" title="{{ product.grade|upper }}" /></p>
             {% endwith %}
             <!-- <p>{{ fav }}</p> -->

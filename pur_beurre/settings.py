@@ -147,29 +147,17 @@ STATIC_URL = '/static/'
 #     STATIC_DIR,
 # ]
 
-if os.environ.get('ENV') == 'PRODUCTION':
-    # Static files settings
-    
-    # print("PROJECT_ROOT:", PROJECT_ROOT)
-    
-    # print("STATIC_ROOT:", STATIC_ROOT)
-    # Extra places for collectstatic to find static files.
-    STATICFILES_DIRS = [
+STATICFILES_DIRS = [
         os.path.join(PROJECT_ROOT, 'static'),
         # os.path.join(BASE_DIR, "static"),
     ]
-    print("STATICFILES_DIRS:", STATICFILES_DIRS)
 
+if os.environ.get('ENV') == 'PRODUCTION':
     # Simplified static file serving.
     # https://warehouse.python.org/project/whitenoise/
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
-else:
-    STATICFILES_DIRS = [
-        os.path.join(PROJECT_ROOT, 'static'),
-        # os.path.join(BASE_DIR, "openfood/static"),
-]
 
 
 print("""
