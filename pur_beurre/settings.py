@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import django_heroku
 import dj_database_url
 
 def get_env_variable(var_name):
@@ -180,3 +181,5 @@ STATIC_ROOT: {}
 STATICFILES_DIRS: {}
 """.format(DEBUG, BASE_DIR, PROJECT_ROOT,
 TEMPLATE_DIR, STATIC_ROOT, STATICFILES_DIRS))
+
+django_heroku.settings(locals())
