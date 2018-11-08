@@ -6,41 +6,33 @@
 {% block content %}
 
 <header class="masthead text-center text-white d-flex">
-<div class="container my-auto">
-    <div id="product">
-        <h1>{{ product.product_name }}</h1>
-        <div id="product-image">
-            <img src="{{ product.product_img_url }}" alt="{{ product.product_name }}" title="{{ product.product_name }}" />
-        </div>
-        <div id="product-description">
-            <p><strong>{{ product.product_name }} ({{ product.grade|upper }})</strong></p>
-            {% with 'img/grade_'|add:product.grade|add:'.png' as grade_image %}
-            <p><img class="grade" src="{% static grade_image %}" alt="{{ product.grade|upper }}" title="{{ product.grade|upper }}" /></p>
-            {% endwith %}
-            <!-- <p>{{ fav }}</p> -->
-            <p><strong> Marque : </strong>{{ product.brand }}</p>
-            <p><small>En vente à {{ product.store }}.</small></p>
-            <p><a href="{{ product.url }}" target="_blank">» Voir sur OpenFoodFacts.org</a></p>
-            {% if user.is_authenticated %}
-                {% if fav %}
-                <p><button class="favorite-remove btn btn-danger" product_id={{ product.id }}>Retirer des favoris</button></p>
+    <div class="container my-auto">
+        <div id="product">
+            <h1>{{ product.product_name }}</h1>
+            <div id="product-image">
+                <img src="{{ product.product_img_url }}" alt="{{ product.product_name }}" title="{{ product.product_name }}" />
+            </div>
+            <div id="product-description">
+                <p><strong>{{ product.product_name }} ({{ product.grade|upper }})</strong></p>
+                {% with 'img/grade_'|add:product.grade|add:'.png' as grade_image %}
+                <p><img class="grade" src="{% static grade_image %}" alt="{{ product.grade|upper }}" title="{{ product.grade|upper }}" /></p>
+                {% endwith %}
+                <p><strong> Marque : </strong>{{ product.brand }}</p>
+                <p><small>En vente à {{ product.store }}.</small></p>
+                <p><a href="{{ product.url }}" target="_blank">» Voir sur OpenFoodFacts.org</a></p>
+                {% if user.is_authenticated %}
+                    {% if fav %}
+                    <p><button class="favorite-remove btn btn-danger" product_id={{ product.id }}>Retirer des favoris</button></p>
+                    {% else %}
+                    <p><button class="favorite-add btn btn-primary" product_id={{ product.id }}>Ajouter aux favoris</button></p>
+                    {% endif %}
                 {% else %}
-                <p><button class="favorite-add btn btn-primary" product_id={{ product.id }}>Ajouter aux favoris</button></p>
+                <p><button class="favorite-add-disabled btn btn-secondary" product_id={{ product.id }}>Ajouter aux favoris</button></p>
                 {% endif %}
-            {% else %}
-            <p><button class="favorite-add-disabled btn btn-secondary" product_id={{ product.id }}>Ajouter aux favoris</button></p>
-            {% endif %}
+            </div>
         </div>
     </div>
-</div>
-
 </header>
-
-
-
-
-
-
 
 <div id="maybe-create-account">
     <div>
@@ -52,16 +44,12 @@
     </div>
 </div>
 
-
-</div>
+</div> <!-- what's that tag? -->
 
 {% endblock %}
 
 {% block extra_js %}
 <script type="text/javascript">
-
-
-
 
 $('.favorite-add').click(function(){
     var product_id, button;

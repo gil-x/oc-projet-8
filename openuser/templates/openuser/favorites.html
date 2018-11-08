@@ -6,41 +6,30 @@
 {% block content %}
 
 <header class="masthead text-center text-white d-flex">
-        {% comment %} <div id="product-to-substitute"> {% endcomment %}
-        
-    {% comment %} </div> {% endcomment %}
-<div id="products-list" class="favorites-container">
-    <div id="products-list-head">
-        <h1>Mes favoris</h1>
-    </div>
-{% if favorites %}
-    {% for favorite in favorites %}
-    <div class="product">
-        <div class="grade-{{ favorite.grade }}">
-            <p><strong>{{ favorite.product_name }}</strong></p>
-            <img src={{ favorite.product_img_url }} alt="" title="" />
-            {% comment %} 
-            <img src={{ favorite.product_img_url }} alt="" title="" />
-            {% with '/img/grade_'|add:favorite.grade|add:'.png' as grade_image %}
-            <p><img class="grade" src="{% static grade_image %}" alt="{{ favorite.grade|upper }}" title="{{ favorite.grade|upper }}" /></p>
-            {% endwith %}
- {% endcomment %}
-            <p><a href={% url 'product_view' pk=favorite.id %} target="_blank">» Fiche produit</a></p>
-            <br>
-            
-            <p><button class="favorite-remove btn btn-danger" product_id={{ favorite.id }}>Retirer des favoris</button></p>
+    <div id="products-list" class="favorites-container">
+        <div id="products-list-head">
+            <h1>Mes favoris</h1>
         </div>
+    {% if favorites %}
+        {% for favorite in favorites %}
+        <div class="product">
+            <div class="grade-{{ favorite.grade }}">
+                <p><strong>{{ favorite.product_name }}</strong></p>
+                <img src={{ favorite.product_img_url }} alt="" title="" />
+                <p><a href={% url 'product_view' pk=favorite.id %} target="_blank">» Fiche produit</a></p>
+                <br>
+                
+                <p><button class="favorite-remove btn btn-danger" product_id={{ favorite.id }}>Retirer des favoris</button></p>
+            </div>
+        </div>
+        
+        {% endfor %}
+    {% else %}
+        <div>
+            <p>Vous n'avez pas encore de favoris</p>
+        </div>
+    {% endif %}
     </div>
-    
-    {% endfor %}
-{% else %}
-    <div>
-        <p>Vous n'avez pas encore de favoris</p>
-    </div>
-{% endif %}
-    
-    
-</div>
 </header>
 
 

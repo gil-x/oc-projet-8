@@ -66,18 +66,14 @@
             <div class="row">
               <div class="col-lg-6 col-md-6 text-center">
                 <div class="service-box mt-5 mx-auto">
-                  <!-- <i class="fas fa-4x fa-paper-plane text-primary mb-3 sr-icon-2"></i> -->
                   <img src="{% static 'img/colette.jpg' %}" alt="" title="" />
                   <h3 class="mb-3">Colette</h3>
-                  <!-- <p class="text-muted mb-0">You can use this theme as is, or you can make changes!</p> -->
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 text-center">
                 <div class="service-box mt-5 mx-auto">
-                  <!-- <i class="fas fa-4x fa-code text-primary mb-3 sr-icon-3"></i> -->
                   <img src="{% static 'img/remy.jpg' %}" alt="" title="" />
                   <h3 class="mb-3">Rémy</h3>
-                  <!-- <p class="text-muted mb-0">We update dependencies to keep things fresh.</p> -->
                 </div>
               </div>
             </div>
@@ -108,37 +104,4 @@
               </div>
             </div>
           </section>
-
-
-
-
-
 {% endblock %}
-
-
-<h2>Trouvez un produit de subsitution pour ce que vous consommez tous les jours</h2>
-<!-- class="ui-widget" -->
-<form class="ui-widget" action="{% url 'search_product' %}" method="post">
-    {% csrf_token %}
-    
-    {{ form.as_p }}
-
-    {% comment %}<input id="product-search" />{% endcomment %}
-    <input id="submit-button" type="submit" value="Chercher !" />
-
-</form>
-<br>
-<!-- <p>(Your search was: "{{ search }}")</p> -->
-<br>
-<h2>First product matching:</h2>
-<p>{{ result }} (grade {{ result.grade|upper }})</p>
-<ul>
-    {% comment %}{% for product in result %}{% endcomment %}
-    {% comment %}<li>{{ product }} (grade {{ product|upper }})</li>{% endcomment %}
-    {% comment %}{% endfor %}{% endcomment %}
-</ul>
-<h2>Substitute:</h2>
-<form class="form-inline md-form mr-auto mb-4">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-elegant btn-rounded btn-sm my-0 waves-effect waves-light" type="submit">Search</button>
-      </form>

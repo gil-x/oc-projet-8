@@ -95,10 +95,7 @@ def user_favorites(request):
         favorites_p = paginator.page(1)
     except EmptyPage:
         favorites_p = paginator.page(paginator.num_pages)
-
     return render(request, 'openuser/favorites_p.html', {'favorites_p': favorites_p})
-
-    # return render(request, 'openuser/favorites.html', {'favorites': favorites})
 
 @login_required
 def add_to_favorites(request, pk):

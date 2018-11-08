@@ -5,49 +5,39 @@
 
 {% block content %}
 <header class="masthead text-center text-white d-flex">
-<div id="products-list" class="favorites-container">
-    <div id="products-list-head">
-        <h1>Mes favoris</h1>
-    </div>
-    {% for favorite in favorites_p %}
-    {# Each "favorite" is a favorite model object. #}
-    <div class="product">
-        <div class="grade-{{ favorite.grade }}">
-            <p><strong>{{ favorite.product_name }}</strong></p>
-            <img src={{ favorite.product_img_url }} alt="" title="" />
-            {% comment %} 
-            <img src={{ favorite.product_img_url }} alt="" title="" />
-            {% with '/img/grade_'|add:favorite.grade|add:'.png' as grade_image %}
-            <p><img class="grade" src="{% static grade_image %}" alt="{{ favorite.grade|upper }}" title="{{ favorite.grade|upper }}" /></p>
-            {% endwith %}
- {% endcomment %}
-            <p><a href={% url 'product_view' pk=favorite.id %} target="_blank">» Fiche produit</a></p>
-            <br>
-            <p><button class="favorite-remove btn btn-danger" product_id={{ favorite.id }}>Retirer des favoris</button></p>
+    <div id="products-list" class="favorites-container">
+        <div id="products-list-head">
+            <h1>Mes favoris</h1>
         </div>
+        {% for favorite in favorites_p %}
+        <div class="product">
+            <div class="grade-{{ favorite.grade }}">
+                <p><strong>{{ favorite.product_name }}</strong></p>
+                <img src={{ favorite.product_img_url }} alt="" title="" />
+                <p><a href={% url 'product_view' pk=favorite.id %} target="_blank">» Fiche produit</a></p>
+                <br>
+                <p><button class="favorite-remove btn btn-danger" product_id={{ favorite.id }}>Retirer des favoris</button></p>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="pagination">
+        <span>
+            {% if favorites_p.has_previous %}
+                <a href="?page={{ favorites_p.previous_page_number }}">Page précédente</a>
+            {% endif %}
+        </span>
+        <span class="current">
+                Page {{ favorites_p.number }} sur {{ favorites_p.paginator.num_pages }}
+        </span>
+        <span>
+            {% if favorites_p.has_next %}
+                <a href="?page={{ favorites_p.next_page_number }}">Page suivante</a>
+            {% endif %}
+        </span>
     </div>
-{% endfor %}
-
-<div class="pagination">
-    <span>
-        {% if favorites_p.has_previous %}
-            <a href="?page={{ favorites_p.previous_page_number }}">Page précédente</a>
-        {% endif %}
-    </span>
-    <span class="current">
-            Page {{ favorites_p.number }} sur {{ favorites_p.paginator.num_pages }}
-    </span>
-    <span>
-        {% if favorites_p.has_next %}
-            <a href="?page={{ favorites_p.next_page_number }}">Page suivante</a>
-        {% endif %}
-    </span>
-</div>
-</div>
+    </div>
 </header>
-
-
-
 {% endblock %}
 
 {% block extra_js %}

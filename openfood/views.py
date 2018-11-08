@@ -86,9 +86,8 @@ def search_on_off(request, search):
     return render(request, 'openfood/search_on_off.html', context)
 
 def get_substitutes_on_off(request, barcode):
-    # rechercher le produit 
+    # Instant search on OFF
     pass
-
 
     
 def product_substitutes(request, pk):
@@ -100,10 +99,8 @@ def product_substitutes(request, pk):
 
 def ramdom_product(request):
     context = {}
-    # request.session["currentsearch"] = "random"
     product_e = Product.objects.filter(grade='e').order_by('?').first()
     context["product"] = product_e
-    # print("product_e:", product_e, "(", product_e.pk, ")")
     context = Product.objects.get_substitutes(product_e.pk)
     context["currentsearch"] = request.session["currentsearch"] = "random_{}".format(product_e.pk)
     return render(request, 'openfood/product_substitutes.html', context)
